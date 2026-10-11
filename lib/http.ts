@@ -20,7 +20,13 @@ export function rateLimited(req: Request, bucket: string, max = Number(process.e
 export function originAllowed(req: Request) {
   const origin = req.headers.get("origin");
   if (!origin) return true;
-  if (origin === new URL(req.url).origin) return true;
+  // Behind a proxy (Render/Vercel) req.url is the internal address, so compare against the public host header.
+  const host = req.headers.get("x-forwarded-host") ?? req.headers.get("host") ?? new URL(req.url).host;
+  try {
+    if (new URL(origin).host === host) return true;
+  } catch {
+    return false;
+  }
   const allowed = (process.env.ALLOWED_ORIGINS ?? "").split(",").map((s) => s.trim()).filter(Boolean);
   return allowed.includes(origin);
 }
