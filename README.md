@@ -31,9 +31,9 @@ put the phone away, and come back to save a nature memory. The whole app is narr
 
 ### 🎬 Watch the 60-second film
 
-<a href="docs/nature-by-friends-demo.mp4"><img src="docs/demo-poster.jpg" alt="Play the Nature by Friends 60-second film: a painted garden with a tree, sunflower, butterfly, bee, snail and ladybug" width="88%" /></a>
+<a href="https://nature-by-friends-axjw.onrender.com/film.mp4"><img src="docs/demo-poster.jpg" alt="Play the Nature by Friends 60-second film: a painted garden with a tree, sunflower, butterfly, bee, snail and ladybug" width="88%" /></a>
 
-<sub>Narrated in the app's own ElevenLabs voice · real product footage · 1920×1080 · <a href="docs/nature-by-friends-demo.mp4">▶ play</a></sub>
+<sub>Narrated in the app's own ElevenLabs voice · real product footage · 1920×1080 · <a href="https://nature-by-friends-axjw.onrender.com/film.mp4">▶ play</a> · <a href="public/film.mp4">file in repo</a></sub>
 
 </div>
 
