@@ -17,7 +17,7 @@ export function HearMe({ slug, name }: { slug: string; name: string }) {
         </svg>
         {playing ? "Stop" : label}
       </button>
-      {sound.kind === "home" && <span className="text-xs text-ink-soft">{name}s are very quiet, so this is where they live.</span>}
+      {sound.kind === "home" && <span className="text-xs text-ink-soft">This friend is very quiet, so you&apos;re hearing the place where it lives.</span>}
       {failed && <span role="status" className="text-xs font-semibold text-coral">This sound couldn&apos;t play. Try listening outside instead!</span>}
     </div>
   );

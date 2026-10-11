@@ -27,5 +27,6 @@ jobs:
           for p in / /garden /friends/earthworm /friends/frog /missions /journal /stories /ecosystem /listen /parents; do
             curl -sf -o /dev/null "localhost:3100$p" || { echo "FAIL $p"; exit 1; }
           done
+          test "$(curl -s -o /dev/null -w '%{http_code}' localhost:3100/friends/not-a-friend)" = "404"
       - run: npm audit --omit=dev --audit-level=high
         continue-on-error: true

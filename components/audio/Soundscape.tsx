@@ -46,9 +46,13 @@ export function Soundscape() {
   // Browsers block sound until the visitor interacts; start on the first tap/key anywhere.
   useEffect(() => {
     if (unlocked) return;
-    const go = () => setUnlocked(true);
-    window.addEventListener("pointerdown", go, { once: true });
-    window.addEventListener("keydown", go, { once: true });
+    // Taps on the sound control itself are handled by its own buttons (e.g. turning it off).
+    const go = (e: Event) => {
+      if ((e.target as Element | null)?.closest?.("[data-soundscape]")) return;
+      setUnlocked(true);
+    };
+    window.addEventListener("pointerdown", go);
+    window.addEventListener("keydown", go);
     return () => { window.removeEventListener("pointerdown", go); window.removeEventListener("keydown", go); };
   }, [unlocked]);
 
@@ -65,7 +69,7 @@ export function Soundscape() {
     const start = a.volume, t0 = performance.now(), ms = 700;
     const step = (t: number) => {
       const k = Math.min(1, (t - t0) / ms);
-      a.volume = start + (target - start) * k;
+      a.volume = Math.min(1, Math.max(0, start + (target - start) * k)); // float drift can exceed [0, 1]
       if (k < 1) fade.current = requestAnimationFrame(step);
       else then?.();
     };
@@ -109,9 +113,9 @@ export function Soundscape() {
 
   const current = scenes.find((s) => s.id === scene)!;
   return (
-    <div ref={panel} className="relative flex items-center">
+    <div ref={panel} data-soundscape className="relative flex items-center">
       <button
-        onClick={() => setPrefs((p) => ({ ...p, on: !p.on }))}
+        onClick={() => { setUnlocked(true); setPrefs((p) => ({ ...p, on: !p.on })); }}
         aria-pressed={prefs.on}
         aria-label="Nature sounds"
         className={`flex min-h-11 cursor-pointer items-center gap-1.5 rounded-l-full border-2 py-1.5 pl-3 pr-2 text-sm font-bold transition-colors ${prefs.on ? "border-leaf bg-leaf-soft text-forest" : "border-forest/15 bg-card text-ink-soft hover:bg-butter-soft"}`}
