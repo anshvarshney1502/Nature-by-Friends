@@ -2,7 +2,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
-import { webLinks, webNodes } from "@/lib/content/web";
+import { WEB_H, WEB_W, webLinks, webNodes } from "@/lib/content/web";
+
+// Padding around the layout so edge nodes and labels fit.
+const PAD = 7;
+const VW = WEB_W + PAD * 2, VH = WEB_H + PAD * 2;
 import { Creature } from "@/components/illustrations/Creature";
 
 const node = (id: string) => webNodes.find((n) => n.id === id)!;
@@ -18,8 +22,8 @@ export function FriendshipWeb() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-      <div className="card relative aspect-square w-full overflow-hidden bg-sky-soft/60 p-2 sm:aspect-[4/3]">
-        <svg viewBox="-4 -2 108 104" className="absolute inset-0 h-full w-full" aria-hidden>
+      <div className="card relative mx-auto w-full max-w-xl overflow-hidden bg-sky-soft/60" style={{ aspectRatio: `${VW} / ${VH}` }}>
+        <svg viewBox={`${-PAD} ${-PAD} ${VW} ${VH}`} className="absolute inset-0 h-full w-full" aria-hidden>
           {webLinks.map((l) => {
             const a = node(l.from), b = node(l.to);
             const on = l.from === focus || l.to === focus;
@@ -36,11 +40,11 @@ export function FriendshipWeb() {
           return (
             <button key={n.id} onClick={() => { setFocus(n.id); setLink(null); }} aria-pressed={n.id === focus}
               className={`absolute flex -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-col items-center rounded-2xl p-0.5 transition-all ${on ? "opacity-100" : "opacity-55 hover:opacity-100"}`}
-              style={{ left: `${((n.x + 4) / 108) * 100}%`, top: `${((n.y + 2) / 104) * 100}%` }}>
-              <span className={`grid h-11 w-11 place-items-center rounded-full border-2 bg-card sm:h-14 sm:w-14 ${n.id === focus ? "border-coral ring-4 ring-coral/25" : "border-forest/25"}`}>
-                {n.slug ? <Creature slug={n.slug} className="h-9 w-9 sm:h-12 sm:w-12" /> : <Thing id={n.id} />}
+              style={{ left: `${((n.x + PAD) / VW) * 100}%`, top: `${((n.y + PAD) / VH) * 100}%` }}>
+              <span className={`grid h-10 w-10 place-items-center rounded-full border-2 bg-card sm:h-14 sm:w-14 ${n.id === focus ? "border-coral ring-4 ring-coral/25" : "border-forest/25"}`}>
+                {n.slug ? <Creature slug={n.slug} className="h-8 w-8 sm:h-12 sm:w-12" /> : <Thing id={n.id} />}
               </span>
-              <span className="mt-0.5 rounded-full bg-card/90 px-1.5 text-[11px] font-bold leading-tight text-forest sm:text-xs">{n.label}</span>
+              <span className="mt-0.5 whitespace-nowrap rounded-full bg-card/90 px-1 text-[10px] font-bold leading-tight text-forest sm:px-1.5 sm:text-xs">{n.label}</span>
             </button>
           );
         })}
@@ -76,6 +80,7 @@ function Thing({ id }: { id: string }) {
   const art: Record<string, React.ReactNode> = {
     sun: <><circle cx="20" cy="20" r="9" fill="#f6d77a" stroke="#2d2a22" strokeWidth="2" />{[0, 45, 90, 135, 180, 225, 270, 315].map((d) => <path key={d} d="M20 4v4" stroke="#e0b64a" strokeWidth="2.5" strokeLinecap="round" transform={`rotate(${d} 20 20)`} />)}</>,
     leaves: <><path d="M8 28C8 16 16 10 26 10c0 10-8 18-18 18Z" fill="#d8a46a" stroke="#2d2a22" strokeWidth="2" /><path d="M16 32c0-8 6-12 16-12-2 8-8 12-16 12Z" fill="#e0785f" stroke="#2d2a22" strokeWidth="2" /></>,
+    pond: <><ellipse cx="20" cy="24" rx="16" ry="9" fill="#a9d3e8" stroke="#2d2a22" strokeWidth="2" /><path d="M10 24 q 5 -3 10 0 t 10 0" stroke="#5aa0b8" strokeWidth="2" fill="none" strokeLinecap="round" /><path d="M30 18 q 2 -8 0 -12 M33 19 q 3 -6 4 -9" stroke="#3f6e2c" strokeWidth="2" fill="none" strokeLinecap="round" /></>,
     soil: <><path d="M4 26q16-10 32 0v8H4Z" fill="#8a5a3b" stroke="#2d2a22" strokeWidth="2" /><circle cx="14" cy="29" r="1.5" fill="#d8a46a" /><circle cx="25" cy="31" r="1.5" fill="#d8a46a" /></>,
   };
   return <svg viewBox="0 0 40 40" className="h-8 w-8 sm:h-10 sm:w-10" aria-hidden>{art[id]}</svg>;

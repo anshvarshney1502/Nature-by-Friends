@@ -2,6 +2,9 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { friendSchema, getProfiles } from "@/lib/db/content";
 import { friends } from "@/lib/content/friends";
 import { creatureSlugs } from "@/components/illustrations/Creature";
+import { webLinks, webNodes } from "@/lib/content/web";
+import { quietMinuteParts } from "@/lib/content/creatureSounds";
+import { existsSync } from "node:fs";
 
 describe("content source", () => {
   afterEach(() => vi.unstubAllEnvs());
@@ -29,5 +32,17 @@ describe("content source", () => {
 
   it("every friend has its own illustration", () => {
     for (const f of friends) expect(creatureSlugs, f.slug).toContain(f.slug);
+  });
+
+  it("friendship web: every link joins real nodes and every friend is in the web", () => {
+    const ids = new Set(webNodes.map((n) => n.id));
+    for (const l of webLinks) expect(ids.has(l.from) && ids.has(l.to), `${l.from}-${l.to}`).toBe(true);
+    for (const f of friends) expect(webNodes.some((n) => n.slug === f.slug), f.slug).toBe(true);
+    for (const n of webNodes) expect(webLinks.some((l) => l.from === n.id || l.to === n.id), `${n.id} has no links`).toBe(true);
+  });
+
+  it("every pre-generated sound file exists", () => {
+    for (let i = 1; i <= quietMinuteParts.length; i++) expect(existsSync(`public/audio/quiet/${i}.mp3`), `quiet ${i}`).toBe(true);
+    for (const f of friends) expect(existsSync(`public/sounds/creatures/${f.slug}.mp3`), f.slug).toBe(true);
   });
 });

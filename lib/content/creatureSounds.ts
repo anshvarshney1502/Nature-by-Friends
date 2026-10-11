@@ -38,12 +38,16 @@ export const safariRounds: { slug: string; reveal: string }[] = [
 
 export const safariIntro = "Welcome to Sound Safari! Listen carefully. Who is making this sound?";
 
-// ElevenLabs reads <break> tags as real pauses (max 3s each).
-export const quietMinuteScript = `Welcome to your quiet minute. Find a safe spot outside, with a trusted adult nearby. Sit or stand very still. <break time="2s" />
-Close your eyes, or look softly at the ground. <break time="3s" />
-Take a slow breath in. <break time="2s" /> And out. <break time="3s" />
-Now, listen. What is the farthest sound you can hear? <break time="3s" /> <break time="3s" />
-What is the closest sound? <break time="3s" /> <break time="3s" />
-Can you hear a bird? The wind? Leaves moving? <break time="3s" /> <break time="3s" />
-Count the different sounds on your fingers. <break time="3s" /> <break time="3s" /> <break time="3s" />
-Slowly open your eyes. You just gave nature your full attention. That's what good friends do. Now, put the phone away, and go explore.`;
+/** Quiet Minute: short narrated parts with timed silences in between (seconds), ~1 minute in total.
+ *  During the silences the background nature sounds come back up, so the child really listens. */
+export const quietMinuteParts: { text: string; pauseAfter: number }[] = [
+  { text: "Welcome to your quiet minute. Find a safe spot outside, with a trusted adult nearby. Sit or stand very still.", pauseAfter: 2 },
+  { text: "Close your eyes, or look softly at the ground.", pauseAfter: 3 },
+  { text: "Take a slow breath in.", pauseAfter: 2 },
+  { text: "And out.", pauseAfter: 3 },
+  { text: "Now, listen. What is the farthest sound you can hear?", pauseAfter: 4 },
+  { text: "What is the closest sound?", pauseAfter: 4 },
+  { text: "Can you hear a bird? The wind? Leaves moving?", pauseAfter: 3 },
+  { text: "Count the different sounds on your fingers.", pauseAfter: 5 },
+  { text: "Slowly open your eyes. You just gave nature your full attention. That's what good friends do. Now, put the phone away, and go explore.", pauseAfter: 0 },
+];

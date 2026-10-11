@@ -16,7 +16,7 @@ Kids pick a little neighbour, get a short outdoor mission, learn its boundaries,
 | `/journal` | Local timeline, return visits with a "Then and now" comparison, opt-in revisit notes, text export |
 | `/stories` | 20 tiny stories that mark real facts (leaf) apart from imagination (spark), with read-aloud |
 | `/listen` | Listening Corner: Sound Safari (hear a creature, guess who, narrator reveals a fact) and the Quiet Minute guided listening |
-| `/ecosystem` | Friendship Web: SVG node graph with 16 curated relationships |
+| `/ecosystem` | Friendship Web: all 20 friends plus sun, pond, leaves and soil, with 37 curated relationships |
 | `/parents` | Purpose, safety, AI limits, privacy, and what hasn't been reviewed |
 | `/api/identify` | Photo, then Google Gemini API, then zod schema, then safety sanitizer, then a designed result |
 | `/api/audio` | ElevenLabs narration of curated text only, cached; the client falls back to the device voice |
@@ -47,7 +47,7 @@ npm run audio:generate   # reads .env.local
 - **Nature soundscape:** 3 looping scenes (chirpy garden, rain on soil, evening crickets) from the Sound Effects API. On by default; it starts at the first tap (browsers block earlier audio), matches the page, and ducks under the narrator.
 - **Hear me:** 20 creature clips. Real calls for animals that make sounds; for quiet ones, the sound of where they live (labelled honestly).
 - **Sound Safari:** 7 creature calls plus narrator reveals in the same voice.
-- **Quiet Minute:** about 40 s of guided outdoor listening in the narrator voice, using ElevenLabs break tags for pauses.
+- **Quiet Minute:** about 1 minute of guided outdoor listening: 9 narrated parts with timed silences, during which the nature soundscape comes back up.
 - **Narration:** profiles, missions and stories (`npm run audio:generate`). Everything else: `npm run sounds:generate`. Both skip files that already exist.
 
 ### MongoDB Atlas (optional)

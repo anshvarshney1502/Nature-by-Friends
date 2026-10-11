@@ -1,20 +1,34 @@
 export type WebNode = { id: string; label: string; x: number; y: number; slug?: string };
 export type WebLink = { from: string; to: string; title: string; explain: string };
 
-// Positions are in a 100x100 viewBox, laid out by hand.
+// Positions are in a 100 x 122 space, laid out by hand in rows so nodes never overlap on a phone.
+export const WEB_W = 100;
+export const WEB_H = 122;
 export const webNodes: WebNode[] = [
-  { id: "sun", label: "Sunlight", x: 50, y: 8 },
-  { id: "sunflower", label: "Sunflower", x: 24, y: 30, slug: "sunflower" },
-  { id: "dandelion", label: "Dandelion", x: 50, y: 34, slug: "dandelion" },
-  { id: "tree", label: "Tree", x: 78, y: 28, slug: "tree" },
-  { id: "honeybee", label: "Honeybee", x: 12, y: 54, slug: "honeybee" },
-  { id: "butterfly", label: "Butterfly", x: 36, y: 56, slug: "butterfly" },
-  { id: "caterpillar", label: "Caterpillar", x: 64, y: 56, slug: "caterpillar" },
-  { id: "sparrow", label: "Sparrow", x: 88, y: 54, slug: "sparrow" },
-  { id: "ant", label: "Ant", x: 22, y: 78, slug: "ant" },
-  { id: "leaves", label: "Fallen leaves", x: 66, y: 78 },
-  { id: "earthworm", label: "Earthworm", x: 44, y: 92, slug: "earthworm" },
-  { id: "soil", label: "Soil", x: 84, y: 92 },
+  { id: "sun", label: "Sunlight", x: 50, y: 5 },
+  { id: "pigeon", label: "Pigeon", x: 84, y: 5, slug: "pigeon" },
+  { id: "rose", label: "Rose", x: 12, y: 28, slug: "rose" },
+  { id: "sunflower", label: "Sunflower", x: 34, y: 28, slug: "sunflower" },
+  { id: "dandelion", label: "Dandelion", x: 58, y: 28, slug: "dandelion" },
+  { id: "tree", label: "Tree", x: 82, y: 28, slug: "tree" },
+  { id: "honeybee", label: "Honeybee", x: 10, y: 50, slug: "honeybee" },
+  { id: "butterfly", label: "Butterfly", x: 30, y: 50, slug: "butterfly" },
+  { id: "caterpillar", label: "Caterpillar", x: 51, y: 50, slug: "caterpillar" },
+  { id: "squirrel", label: "Squirrel", x: 71, y: 50, slug: "squirrel" },
+  { id: "crow", label: "Crow", x: 90, y: 50, slug: "crow" },
+  { id: "dragonfly", label: "Dragonfly", x: 10, y: 72, slug: "dragonfly" },
+  { id: "grasshopper", label: "Grasshopper", x: 31, y: 72, slug: "grasshopper" },
+  { id: "sparrow", label: "Sparrow", x: 52, y: 72, slug: "sparrow" },
+  { id: "leaves", label: "Fallen leaves", x: 72, y: 72 },
+  { id: "moss", label: "Moss", x: 91, y: 72, slug: "moss" },
+  { id: "pond", label: "Pond", x: 12, y: 95 },
+  { id: "frog", label: "Frog", x: 33, y: 95, slug: "frog" },
+  { id: "ant", label: "Ant", x: 54, y: 95, slug: "ant" },
+  { id: "mushroom", label: "Mushroom", x: 76, y: 95, slug: "mushroom" },
+  { id: "ladybug", label: "Ladybug", x: 10, y: 118, slug: "ladybug" },
+  { id: "earthworm", label: "Earthworm", x: 31, y: 118, slug: "earthworm" },
+  { id: "snail", label: "Snail", x: 52, y: 118, slug: "snail" },
+  { id: "soil", label: "Soil", x: 74, y: 118 },
 ];
 
 export const webLinks: WebLink[] = [
@@ -34,4 +48,25 @@ export const webLinks: WebLink[] = [
   { from: "ant", to: "dandelion", title: "Flower snackers", explain: "Ants sometimes visit flowers to sip a little nectar, though they are not as helpful at pollinating as bees." },
   { from: "ant", to: "soil", title: "Tiny tunnels", explain: "Ant tunnels help mix the soil and let air reach underground." },
   { from: "dandelion", to: "soil", title: "Seeds find ground", explain: "Dandelion seeds float on the wind. The ones that land on soil can grow." },
+  { from: "rose", to: "sun", title: "Sun-powered", explain: "Like all green plants, roses use sunlight to make their own food." },
+  { from: "honeybee", to: "rose", title: "Pollen from petals", explain: "Bees visit rose flowers to collect pollen." },
+  { from: "squirrel", to: "tree", title: "Accidental gardeners", explain: "Squirrels live in trees and bury nuts. Nuts they never dig up can grow into new trees." },
+  { from: "crow", to: "tree", title: "High-up homes", explain: "Crows often build their nests high in the branches of trees." },
+  { from: "crow", to: "earthworm", title: "Ground snacks", explain: "Crows often walk on the ground looking for worms and insects to eat." },
+  { from: "grasshopper", to: "dandelion", title: "Leaf nibblers", explain: "Grasshoppers eat the leaves of many plants, including dandelions." },
+  { from: "sparrow", to: "grasshopper", title: "Bird food", explain: "Many birds catch grasshoppers to eat." },
+  { from: "frog", to: "grasshopper", title: "Sticky-tongue catch", explain: "Frogs catch insects, like grasshoppers, with a quick sticky tongue." },
+  { from: "frog", to: "pond", title: "Tadpole nursery", explain: "Frogs lay their eggs in water, where tadpoles hatch and grow." },
+  { from: "dragonfly", to: "pond", title: "Underwater childhood", explain: "Young dragonflies, called nymphs, grow up underwater in ponds." },
+  { from: "dragonfly", to: "frog", title: "Pond neighbours", explain: "Dragonflies and frogs both need clean ponds, so they are often found together." },
+  { from: "mushroom", to: "leaves", title: "Leaf recyclers", explain: "Fungi break down fallen leaves and dead wood into soil." },
+  { from: "mushroom", to: "tree", title: "Root helpers", explain: "Many fungi grow alongside tree roots and help them take up water and nutrients." },
+  { from: "moss", to: "tree", title: "Bark blanket", explain: "Moss often grows on shady tree bark, where it stays damp." },
+  { from: "ladybug", to: "rose", title: "Garden guards", explain: "Ladybugs eat aphids, tiny insects that suck juice from plants like roses." },
+  { from: "ant", to: "ladybug", title: "Aphid tug-of-war", explain: "Some ants look after aphids for their sweet juice, and chase away ladybugs that try to eat them." },
+  { from: "snail", to: "leaves", title: "Slow recyclers", explain: "Snails eat old and soft leaves, helping to break them down." },
+  { from: "snail", to: "mushroom", title: "Fungus nibblers", explain: "Snails sometimes nibble mushrooms on damp days." },
+  { from: "pigeon", to: "tree", title: "Perch and nest", explain: "Pigeons perch on trees and buildings, and some nest in trees." },
+  { from: "pigeon", to: "crow", title: "Town neighbours", explain: "Pigeons and crows both live close to people in towns and cities." },
+  { from: "moss", to: "soil", title: "Rain sponge", explain: "Moss soaks up rainwater and helps stop soil from washing away." },
 ];

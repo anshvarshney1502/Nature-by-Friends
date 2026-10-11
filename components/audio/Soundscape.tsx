@@ -23,6 +23,7 @@ export function Soundscape() {
   const scene = prefs.scene ?? sceneForPath(path);
 
   const [unlocked, setUnlocked] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
 
   // Restore saved choices (including "off").
   useEffect(() => {
@@ -33,6 +34,7 @@ export function Soundscape() {
     } catch {
       /* storage unavailable: defaults are fine */
     }
+    setHydrated(true); // show the tap hint only after saved prefs are known (no flash if sound is off)
   }, []);
 
   useEffect(() => {
@@ -131,7 +133,22 @@ export function Soundscape() {
       >
         <svg viewBox="0 0 24 24" className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden><path d="m6 9 6 6 6-6" /></svg>
       </button>
-      {prefs.on && <span className="sr-only" aria-live="polite">Playing {current.label}</span>}
+      {prefs.on && unlocked && <span className="sr-only" aria-live="polite">Playing {current.label}</span>}
+
+      {/* Browsers only allow sound after the first tap, so invite one. */}
+      <AnimatePresence>
+        {prefs.on && !unlocked && hydrated && (
+          <motion.p
+            initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+            className="pointer-events-none absolute right-0 top-full z-30 mt-2 flex w-max items-center gap-1.5 rounded-full bg-forest px-3 py-1.5 text-xs font-bold text-paper shadow-lg"
+          >
+            <svg viewBox="0 0 24 24" className="anim-bob h-4 w-4" fill="currentColor" aria-hidden>
+              <path d="M4 14c0-5 4-8 9-8 2 0 4 1 5 3l3 1-3 2c0 4-3 7-8 7H6l2-2c-2-1-4-1-4-3Zm11-5a1 1 0 1 0 0 .1Z" />
+            </svg>
+            Tap anywhere to hear the garden
+          </motion.p>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {open && (

@@ -4,7 +4,7 @@
 import { access, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { scenes } from "../lib/content/soundscapes";
-import { creatureSounds, quietMinuteScript, safariIntro, safariRounds } from "../lib/content/creatureSounds";
+import { creatureSounds, quietMinuteParts, safariIntro, safariRounds } from "../lib/content/creatureSounds";
 
 const key = process.env.ELEVENLABS_API_KEY;
 if (!key) throw new Error("Set ELEVENLABS_API_KEY");
@@ -39,4 +39,4 @@ for (const s of scenes) await make(`sounds/${s.id}.mp3`, sfx(s.prompt, 22, true)
 for (const [slug, s] of Object.entries(creatureSounds)) await make(`sounds/creatures/${slug}.mp3`, sfx(s.prompt, s.kind === "call" ? 5 : 8, false));
 await make("audio/safari/intro.mp3", speak(safariIntro));
 for (const r of safariRounds) await make(`audio/safari/${r.slug}.mp3`, speak(r.reveal));
-await make("audio/quiet-minute.mp3", speak(quietMinuteScript));
+for (const [i, p] of quietMinuteParts.entries()) await make(`audio/quiet/${i + 1}.mp3`, speak(p.text));
