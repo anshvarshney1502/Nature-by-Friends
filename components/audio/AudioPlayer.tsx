@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { claimVoice, releaseVoice } from "@/lib/audio/voiceChannel";
 
 type State = "idle" | "loading" | "playing" | "paused" | "unavailable";
 const SPEEDS = [0.8, 1, 1.2];
@@ -15,6 +16,17 @@ export function AudioPlayer({ text, label = "Listen" }: { text: string; label?: 
   const [speed, setSpeed] = useState(1);
   const audio = useRef<HTMLAudioElement | null>(null);
   const url = useRef<string | null>(null);
+
+  // Another voice in the app took over: go quiet (keeps the loaded audio so Replay is instant).
+  const [yieldTo] = useState(() => () => {
+    audio.current?.pause();
+    if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();
+    setState((s) => (s === "playing" || s === "paused" ? "idle" : s));
+  });
+  useEffect(() => {
+    if (state === "playing") claimVoice(yieldTo);
+    else if (state === "idle") releaseVoice(yieldTo);
+  }, [state, yieldTo]);
 
   // Let the background soundscape duck under the narrator.
   useEffect(() => {

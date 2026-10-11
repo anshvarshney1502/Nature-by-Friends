@@ -21,6 +21,9 @@ export function Soundscape() {
   const [open, setOpen] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
   const scene = prefs.scene ?? sceneForPath(path);
+  // Latest wishes, readable from async callbacks without stale closures.
+  const want = useRef({ on: prefs.on, volume: prefs.volume, ducked });
+  useEffect(() => { want.current = { on: prefs.on, volume: prefs.volume, ducked }; });
 
   const [unlocked, setUnlocked] = useState(false);
   const [hydrated, setHydrated] = useState(false);
@@ -64,18 +67,22 @@ export function Soundscape() {
     return () => window.removeEventListener("nbf:narration", onNarration);
   }, []);
 
+  // Timer-based fade: requestAnimationFrame is paused in background tabs, which used to leave
+  // the sound playing after "off". Intervals keep running (throttled), so the fade always finishes.
   function fadeTo(target: number, then?: () => void) {
     const a = audio.current;
     if (!a) return;
-    if (fade.current) cancelAnimationFrame(fade.current);
-    const start = a.volume, t0 = performance.now(), ms = 700;
-    const step = (t: number) => {
-      const k = Math.min(1, (t - t0) / ms);
+    if (fade.current) window.clearInterval(fade.current);
+    const start = a.volume, t0 = Date.now(), ms = 500;
+    fade.current = window.setInterval(() => {
+      const k = Math.min(1, (Date.now() - t0) / ms);
       a.volume = Math.min(1, Math.max(0, start + (target - start) * k)); // float drift can exceed [0, 1]
-      if (k < 1) fade.current = requestAnimationFrame(step);
-      else then?.();
-    };
-    fade.current = requestAnimationFrame(step);
+      if (k >= 1) {
+        window.clearInterval(fade.current!);
+        fade.current = null;
+        then?.();
+      }
+    }, 30);
   }
 
   // Start, stop or switch scene.
@@ -83,25 +90,32 @@ export function Soundscape() {
     const src = `/sounds/${scene}.mp3`;
     if (!prefs.on) {
       fadeTo(0, () => audio.current?.pause());
-      return;
+      const a = audio.current;
+      const hardStop = window.setTimeout(() => a?.pause(), 700); // guarantee: off always means silent
+      return () => window.clearTimeout(hardStop);
     }
     if (!unlocked) return;
     const swap = () => {
       audio.current ??= Object.assign(new Audio(), { loop: true, volume: 0, preload: "auto" });
       const a = audio.current;
       if (!a.src.endsWith(src)) a.src = src;
-      a.play().then(() => fadeTo(ducked ? prefs.volume * 0.2 : prefs.volume)).catch(() => setUnlocked(false)); // still blocked: retry on the next tap
+      a.play()
+        .then(() => {
+          // The visitor may have turned sound off while it was starting.
+          if (!want.current.on) return a.pause();
+          fadeTo(want.current.ducked ? want.current.volume * 0.2 : want.current.volume);
+        })
+        .catch(() => setUnlocked(false)); // still blocked: retry on the next tap
     };
     if (audio.current && !audio.current.paused && !audio.current.src.endsWith(src)) fadeTo(0, swap);
     else swap();
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- volume/duck changes are handled by the effect below
   }, [prefs.on, scene, unlocked]);
 
   useEffect(() => {
     if (prefs.on && audio.current && !audio.current.paused) fadeTo(ducked ? prefs.volume * 0.2 : prefs.volume);
   }, [ducked, prefs.volume, prefs.on]);
 
-  useEffect(() => () => { audio.current?.pause(); }, []);
+  useEffect(() => () => { audio.current?.pause(); if (fade.current) window.clearInterval(fade.current); }, []);
 
   useEffect(() => {
     if (!open) return;

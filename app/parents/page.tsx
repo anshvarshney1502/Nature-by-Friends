@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { friendRules } from "@/lib/content/general";
+import { DeleteMyData } from "@/components/journal/DeleteMyData";
 
 export const metadata: Metadata = { title: "For parents & educators" };
 
@@ -50,7 +51,9 @@ const sections: { h: string; p: React.ReactNode }[] = [
         <li>“Spot nicknames” are free text — please help children avoid writing addresses.</li>
         <li>Read-aloud sends only the app&apos;s own written text to a voice service, never anything a child typed.</li>
         <li>Gentle background nature sounds start after the first tap. Turn them off with the “Nature sounds” button at the top; the app remembers. They are pre-made audio files, so playing them sends nothing anywhere.</li>
+        <li>Progress (friends met, sounds learned, quiet minutes) and the guided-tour status are also kept only in this browser.</li>
         <li>No advertising or third-party tracking.</li>
+        <li className="list-none pt-2"><DeleteMyData /></li>
         <li>Return-visit reminders are opt-in and only appear inside the journal. The app never sends notifications.</li>
       </ul>
     ),

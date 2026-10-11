@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Soundscape } from "@/components/audio/Soundscape";
 
 const links = [
+  { href: "/", label: "Home", icon: "M3 11 12 3l9 8M5 9.5V20h5v-6h4v6h5V9.5" },
   { href: "/garden", label: "Garden", icon: "M12 21c-4-3-7-6-7-10a7 7 0 0 1 14 0c0 4-3 7-7 10Zm0-13v8m-3-5 3 2 3-2" },
   { href: "/missions", label: "Mission", icon: "M12 3a6 6 0 0 0-6 6c0 4 6 12 6 12s6-8 6-12a6 6 0 0 0-6-6Zm0 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z" },
   { href: "/listen", label: "Listen", icon: "M3 14v-2a9 9 0 0 1 18 0v2M3 14a2 2 0 0 1 2-2h1v7H5a2 2 0 0 1-2-2v-3Zm18 0a2 2 0 0 0-2-2h-1v7h1a2 2 0 0 0 2-2v-3Z" },
@@ -27,7 +28,7 @@ function Logo() {
 
 export function Nav() {
   const path = usePathname();
-  const active = (href: string) => path === href || path.startsWith(href + "/");
+  const active = (href: string) => (href === "/" ? path === "/" : path === href || path.startsWith(href + "/"));
   return (
     <>
       <header className="sticky top-0 z-30 border-b-2 border-leaf/15 bg-paper/90 backdrop-blur">
@@ -51,7 +52,7 @@ export function Nav() {
       </header>
       <nav aria-label="Main mobile" className="fixed inset-x-0 bottom-0 z-30 border-t-2 border-leaf/20 bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
         <ul className="grid grid-cols-5">
-          {links.filter((l) => l.href !== "/ecosystem").map((l) => (
+          {links.filter((l) => l.href !== "/ecosystem" && l.href !== "/stories").map((l) => (
             <li key={l.href}>
               <Link href={l.href} aria-current={active(l.href) ? "page" : undefined} className={`flex min-h-14 flex-col items-center justify-center gap-0.5 text-xs font-bold ${active(l.href) ? "text-moss" : "text-ink-soft"}`}>
                 <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>

@@ -85,6 +85,17 @@ export default function Home() {
         </div>
       </section>
 
+      <section aria-labelledby="stories-h" className="card flex flex-col items-center gap-5 bg-butter-soft/50 p-6 sm:flex-row-reverse md:p-8">
+        <div className="flex shrink-0 -space-x-3">
+          {["snail", "dandelion", "crow"].map((s) => <Creature key={s} slug={s} className="h-20 w-20" />)}
+        </div>
+        <div>
+          <h2 id="stories-h" className="text-3xl font-semibold">Tiny Nature Stories</h2>
+          <p className="mt-1 text-ink-soft">Twenty short stories, read aloud. A leaf marks the real facts; a sparkle marks the imagination.</p>
+          <Link href="/stories" className="btn btn-soft mt-4">Read a story</Link>
+        </div>
+      </section>
+
       <section aria-labelledby="journey" className="card relative overflow-hidden bg-sky-soft p-6 md:p-10">
         <h2 id="journey" className="text-3xl font-semibold">Your friendship journey</h2>
         <p className="mt-2 text-ink-soft">Six small steps. Most of them happen with the phone in your pocket.</p>

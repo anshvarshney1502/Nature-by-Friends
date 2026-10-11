@@ -22,6 +22,7 @@ export function OnboardingTour() {
   const [dir, setDir] = useState(1);
   const [started, setStarted] = useState(false); // narration only after a tap (browser audio rule)
   const [muted, setMuted] = useState(false);
+  const [voiceDone, setVoiceDone] = useState(false); // narration finished: invite the next step
   const dialog = useRef<HTMLDivElement>(null);
   const slide = tourSlides[i];
   const last = i === tourSlides.length - 1;
@@ -53,9 +54,12 @@ export function OnboardingTour() {
 
   // Narrate the current slide.
   useEffect(() => {
-    if (open && started && !muted) play(`/audio/tour/${slide.id}.mp3`);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset the cue for each new slide
+    setVoiceDone(false);
+    if (open && started && !muted) play(`/audio/tour/${slide.id}.mp3`, () => setVoiceDone(true));
     else stop();
   }, [open, started, muted, slide.id, play, stop]);
+  const showCue = started && (voiceDone || muted);
 
   // Keyboard, focus and scroll lock while open.
   useEffect(() => {
@@ -135,7 +139,7 @@ export function OnboardingTour() {
                     <path d="M0 250 C 120 228, 280 236, 400 246 L 400 300 L 0 300 Z" fill="#8fbf6a" />
                     <circle cx="335" cy="60" r="26" fill="#f6d77a" />
                   </svg>
-                  <Layer z={-40} className="left-[6%] top-[14%] w-[34%]" delay={0}><Creature slug={slide.creatures[0]} /></Layer>
+                  <Layer z={20} className="left-[6%] top-[14%] w-[34%]" delay={0}><Creature slug={slide.creatures[0]} /></Layer>
                   <Layer z={60} className="right-[8%] top-[10%] w-[30%]" delay={0.6}><Creature slug={slide.creatures[1]} /></Layer>
                   <Layer z={140} className="bottom-[4%] left-[34%] w-[34%]" delay={1.2}><Creature slug={slide.creatures[2]} /></Layer>
                   <span className="absolute left-4 top-4 rounded-full bg-card/90 px-3 py-1 text-xs font-bold text-forest" style={{ transform: "translateZ(90px)" }}>
@@ -181,13 +185,25 @@ export function OnboardingTour() {
           {!started ? (
             <button className="btn btn-primary" onClick={() => setStarted(true)}>Show me around</button>
           ) : last ? (
-            <button className="btn btn-primary" onClick={() => { close(); router.push("/garden"); }}>Let&apos;s explore!</button>
+            <button className={`btn btn-primary ${showCue ? "ring-4 ring-butter" : ""}`} onClick={() => { close(); router.push("/garden"); }}>
+              Let&apos;s explore!{showCue && <Arrow />}
+            </button>
           ) : (
-            <button className="btn btn-primary" onClick={() => go(i + 1)}>Next</button>
+            <button className={`btn btn-primary ${showCue ? "ring-4 ring-butter" : ""}`} onClick={() => go(i + 1)}>
+              Next{showCue && <Arrow />}
+            </button>
           )}
         </div>
       </div>
     </div>
+  );
+}
+
+function Arrow() {
+  return (
+    <svg viewBox="0 0 24 24" className="anim-nudge h-5 w-5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
   );
 }
 

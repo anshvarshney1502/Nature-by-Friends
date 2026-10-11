@@ -7,6 +7,7 @@ import { AudioPlayer } from "@/components/audio/AudioPlayer";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { profileText } from "@/lib/content/narration";
 import { HearMe } from "@/components/audio/HearMe";
+import { MarkMet } from "@/components/journal/ProgressPanel";
 
 export const generateStaticParams = () => friends.map((f) => ({ slug: f.slug }));
 // Every profile is prebuilt, so blocking on params is instant in practice.
@@ -35,6 +36,7 @@ export default async function FriendPage({ params }: PageProps<"/friends/[slug]"
 
   return (
     <article className="space-y-6">
+      <MarkMet slug={f.slug} />
       <Link href="/garden" className="btn-ghost inline-flex items-center font-bold">← Back to the garden</Link>
       <header className="grid items-center gap-6 md:grid-cols-[minmax(0,320px)_1fr]">
         <div className="card grid aspect-square place-items-center bg-sky-soft">

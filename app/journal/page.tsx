@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { JournalView } from "@/components/journal/JournalView";
+import { ProgressPanel } from "@/components/journal/ProgressPanel";
 
 export const metadata: Metadata = { title: "Nature Journal" };
 
@@ -8,7 +9,9 @@ export default function JournalPage() {
     <div className="mx-auto max-w-3xl">
       <h1 className="text-4xl font-semibold">My Nature Journal</h1>
       <p className="mt-2 text-lg text-ink-soft">Every page is a memory of being a good friend. Saved only on this device.</p>
-      <div className="mt-6"><JournalView /></div>
+      <div className="mt-6"><ProgressPanel /></div>
+      <h2 className="mt-8 text-2xl font-semibold">My pages</h2>
+      <div className="mt-4"><JournalView /></div>
     </div>
   );
 }

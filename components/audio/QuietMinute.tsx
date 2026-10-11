@@ -2,20 +2,22 @@
 import { useEffect, useRef, useState } from "react";
 import { quietMinuteParts } from "@/lib/content/creatureSounds";
 import { useClip } from "./useClip";
+import { addQuietMinute } from "@/lib/storage/progress";
 
 /**
  * Guided outdoor listening (~1 minute): narrator parts with real silences between them.
  * The background soundscape ducks under the voice and comes back up in the silences.
  */
 export function QuietMinute({ compact = false }: { compact?: boolean }) {
-  const { play, stop, failed } = useClip();
   const [step, setStep] = useState<number | null>(null); // index of current part, null when idle
   const timer = useRef<number | null>(null);
+  // If another voice starts (read-aloud, Sound Safari…), end the Quiet Minute instead of talking over it.
+  const { play, stop, failed } = useClip(() => { clear(); setStep(null); });
 
   const clear = () => { if (timer.current) window.clearTimeout(timer.current); timer.current = null; };
 
   function playPart(i: number) {
-    if (i >= quietMinuteParts.length) return finish();
+    if (i >= quietMinuteParts.length) { addQuietMinute(); return finish(); } // completed, not stopped
     setStep(i);
     play(`/audio/quiet/${i + 1}.mp3`, () => {
       timer.current = window.setTimeout(() => playPart(i + 1), quietMinuteParts[i].pauseAfter * 1000);

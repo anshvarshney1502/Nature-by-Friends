@@ -1,16 +1,18 @@
 import Link from "next/link";
 import type { Friend } from "@/lib/content/types";
 import { Creature } from "@/components/illustrations/Creature";
+import { MetBadge } from "@/components/journal/ProgressPanel";
 
 export function FriendCard({ friend }: { friend: Friend }) {
   return (
     <Link
       href={`/friends/${friend.slug}`}
-      className="card group flex h-full flex-col p-4 transition-transform duration-200 hover:-translate-y-1 hover:rotate-[-0.5deg]"
+      className="card group relative flex h-full flex-col p-4 transition-transform duration-200 hover:-translate-y-1 hover:rotate-[-0.5deg]"
     >
       <div className="grid aspect-square place-items-center rounded-[1.5rem] bg-paper-deep/60">
         <Creature slug={friend.slug} className="h-3/4 w-3/4 transition-transform duration-300 group-hover:scale-105" />
       </div>
+      <MetBadge slug={friend.slug} />
       <h3 className="mt-3 text-xl font-semibold">{friend.name}</h3>
       <p className="mb-auto text-sm text-ink-soft">{friend.tagline}</p>
       <p className="chip mt-3 self-start whitespace-nowrap bg-leaf-soft text-xs text-forest sm:text-sm">

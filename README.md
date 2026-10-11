@@ -14,7 +14,7 @@ Kids pick a little neighbour, get a short outdoor mission, learn its boundaries,
 | `/garden` | 20 curated friends with search, category filters, category activities, "Surprise me" |
 | `/friends/[slug]` | Profile: facts, habitat, why it matters, safe watching, what not to do, mission, related friends, read-aloud |
 | `/missions` | 6-step journey: Meet, Discover, Respect, Go outside, Reflect, Remember. Optional photo helper. Progress survives closing the app |
-| `/journal` | Local timeline, return visits with a "Then and now" comparison, opt-in revisit notes, text export |
+| `/journal` | **My nature progress** (friends met, missions, return visits, sounds learned, quiet minutes, all stored only in this browser), local timeline, return visits with a "Then and now" comparison, opt-in revisit notes, text export |
 | `/stories` | 20 tiny stories that mark real facts (leaf) apart from imagination (spark), with read-aloud |
 | `/listen` | Listening Corner: Sound Safari (hear a creature, guess who, narrator reveals a fact) and the Quiet Minute guided listening |
 | `/ecosystem` | Friendship Web: all 20 friends plus sun, pond, leaves and soil, with 37 curated relationships |
@@ -69,7 +69,8 @@ Give the deployed app a **read-only** database user. Pages are statically render
   - Safety guidance always comes from curated content.
 - There is no free-text AI chat for children.
 - The journal stays in `localStorage`. Photos are downscaled on-device, and re-encoding strips EXIF and GPS data. A photo is sent once, only when the child taps "Ask about this photo", and is never stored on the server.
-- There are no accounts, location, streaks, points or social features.
+- There are no accounts, location, streaks, points or social features. Progress lives only in the visitor's browser (`localStorage`), and "Delete all my data" on the Parents page wipes it.
+- One voice at a time: every narration, clip and the read-aloud share one channel (`lib/audio/voiceChannel.ts`), so voices never overlap.
 
 ## Security
 - **Secrets** live only in `.env.local` (git-ignored) and the host's env settings. None are `NEXT_PUBLIC_`. A scan of the full git history and the built browser bundles found no keys, passwords or env names.

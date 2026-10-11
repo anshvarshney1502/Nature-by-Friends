@@ -42,3 +42,23 @@ describe("journal storage", () => {
     expect(addEntry(base, s)).toBeNull();
   });
 });
+
+import { addQuietMinute, isAppKey, loadProgress, markMet, markSound } from "@/lib/storage/progress";
+describe("local progress", () => {
+  it("records friends met and sounds once each, and counts quiet minutes", () => {
+    const s = mk();
+    markMet("frog", s); markMet("frog", s); markMet("moss", s);
+    markSound("crow", s);
+    addQuietMinute(s); addQuietMinute(s);
+    expect(loadProgress(s)).toEqual({ met: ["frog", "moss"], sounds: ["crow"], quietMinutes: 2 });
+  });
+  it("survives corrupt data", () => {
+    const s = mk();
+    s.setItem("nbf.progress.v1", "{oops");
+    expect(loadProgress(s).met).toEqual([]);
+  });
+  it("only app keys are deleted by 'Delete all my data'", () => {
+    expect(isAppKey("nbf.journal.v1")).toBe(true);
+    expect(isAppKey("someone-elses-key")).toBe(false);
+  });
+});

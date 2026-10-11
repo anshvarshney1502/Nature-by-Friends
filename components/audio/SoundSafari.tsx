@@ -6,6 +6,7 @@ import { safariRounds } from "@/lib/content/creatureSounds";
 import { getFriend } from "@/lib/content/friends";
 import { Creature } from "@/components/illustrations/Creature";
 import { useClip } from "./useClip";
+import { markSound } from "@/lib/storage/progress";
 
 const shuffle = <T,>(xs: T[]) => [...xs].sort(() => Math.random() - 0.5);
 
@@ -41,6 +42,7 @@ export function SoundSafari() {
     if (solved || !slug) return;
     if (s === slug) {
       setSolved(true);
+      markSound(slug);
       play(`/audio/safari/${slug}.mp3`);
     } else setWrong((w) => [...w, s]);
   }
