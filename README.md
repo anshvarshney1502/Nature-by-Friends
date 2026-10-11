@@ -42,6 +42,9 @@ Put `ELEVENLABS_API_KEY` in `.env.local` (git-ignored). The narrator voice defau
 npm run audio:generate   # reads .env.local
 ```
 
+### Nature soundscape
+Three ambient loops (meadow, rain on soil, evening crickets) made with the **ElevenLabs Sound Effects API** and committed in `public/sounds/`. A header toggle plays them (off by default), picks a scene to match the page, and ducks the volume while the narrator speaks. Regenerate with `npm run sounds:generate`.
+
 ### MongoDB Atlas (optional)
 ```bash
 npm run seed:mongo   # reads MONGODB_URI from .env.local;   # creates nature_profiles with a $jsonSchema validator, upserts 12 profiles

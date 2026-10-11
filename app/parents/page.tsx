@@ -49,6 +49,7 @@ const sections: { h: string; p: React.ReactNode }[] = [
         <li>The Nature Journal is saved only in this browser (localStorage). Clearing browser data deletes it. You can download it as a text file.</li>
         <li>“Spot nicknames” are free text — please help children avoid writing addresses.</li>
         <li>Read-aloud sends only the app&apos;s own written text to a voice service, never anything a child typed.</li>
+        <li>Background nature sounds are off until someone turns them on. They are pre-made audio files, so playing them sends nothing anywhere.</li>
         <li>No advertising or third-party tracking.</li>
         <li>Return-visit reminders are opt-in and only appear inside the journal. The app never sends notifications.</li>
       </ul>

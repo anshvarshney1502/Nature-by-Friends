@@ -16,7 +16,13 @@ export function AudioPlayer({ text, label = "Listen" }: { text: string; label?: 
   const audio = useRef<HTMLAudioElement | null>(null);
   const url = useRef<string | null>(null);
 
+  // Let the background soundscape duck under the narrator.
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent("nbf:narration", { detail: state === "playing" }));
+  }, [state]);
+
   useEffect(() => () => {
+    window.dispatchEvent(new CustomEvent("nbf:narration", { detail: false }));
     audio.current?.pause();
     if (url.current) URL.revokeObjectURL(url.current);
     if (typeof speechSynthesis !== "undefined") speechSynthesis.cancel();

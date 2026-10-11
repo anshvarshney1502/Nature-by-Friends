@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Soundscape } from "@/components/audio/Soundscape";
 
 const links = [
   { href: "/garden", label: "Garden", icon: "M12 21c-4-3-7-6-7-10a7 7 0 0 1 14 0c0 4-3 7-7 10Zm0-13v8m-3-5 3 2 3-2" },
@@ -31,7 +32,7 @@ export function Nav() {
       <header className="sticky top-0 z-30 border-b-2 border-leaf/15 bg-paper/90 backdrop-blur">
         <nav aria-label="Main" className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2.5">
           <Logo />
-          <ul className="hidden items-center gap-1 md:flex">
+          <ul className="ml-auto hidden items-center gap-1 md:flex">
             {links.map((l) => (
               <li key={l.href}>
                 <Link
@@ -44,6 +45,7 @@ export function Nav() {
               </li>
             ))}
           </ul>
+          <Soundscape />
         </nav>
       </header>
       <nav aria-label="Main mobile" className="fixed inset-x-0 bottom-0 z-30 border-t-2 border-leaf/20 bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">

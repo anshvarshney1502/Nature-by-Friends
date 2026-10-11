@@ -10,7 +10,8 @@
     "test": "vitest run",
     "typecheck": "next typegen && tsc --noEmit",
     "seed:mongo": "tsx --env-file-if-exists=.env.local scripts/seed-mongo.mts",
-    "audio:generate": "tsx --env-file-if-exists=.env.local scripts/generate-audio.mts"
+    "audio:generate": "tsx --env-file-if-exists=.env.local scripts/generate-audio.mts",
+    "sounds:generate": "tsx --env-file-if-exists=.env.local scripts/generate-sounds.mts"
   },
   "dependencies": {
     "mongodb": "^7.7.0",
