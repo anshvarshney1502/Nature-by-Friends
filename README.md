@@ -34,7 +34,7 @@ npm run lint && npm run typecheck && npm run build
 No environment variables are needed. See `.env.example` for the optional services.
 
 ### Gemini photo helper (optional)
-Create a key at https://aistudio.google.com/apikey and put `GEMINI_API_KEY=...` in `.env.local` (and in Render's env vars). Default model is **Gemma 4** (`gemma-4-26b-a4b-it`, open weights) served by the Gemini API; if it errors, the request is retried once on `gemini-flash-latest`. Override with `GEMINI_MODEL` / `GEMINI_FALLBACK_MODEL`. On Google's free tier, submitted content may be used by Google to improve its services; the Parents page says so.
+Create a key at https://aistudio.google.com/apikey and put `GEMINI_API_KEY=...` in `.env.local` (and in Render's env vars). Default model is **Gemma 4** (`gemma-4-26b-a4b-it`, open weights) served by the Gemini API; if it errors, the request is retried once on `gemini-flash-lite-latest`. Override with `GEMINI_MODEL` / `GEMINI_FALLBACK_MODEL`. On Google's free tier, submitted content may be used by Google to improve its services; the Parents page says so.
 
 ### ElevenLabs (optional)
 Put `ELEVENLABS_API_KEY` in `.env.local` (git-ignored). The narrator voice defaults to `EeQEodFZVtBkjtgK3HBc`; override with `ELEVENLABS_VOICE_ID`. To pre-generate the ~37 clips (about 12k characters) into `public/audio/` so visitors don't spend credits:

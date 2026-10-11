@@ -89,7 +89,7 @@ describe("/api/identify", () => {
     const body = await (await identify(req({ image: img }))).json();
     expect(body.mode).toBe("live");
     const models = fetchMock.mock.calls.map((c) => JSON.parse((c[1] as RequestInit).body as string).model);
-    expect(models).toEqual(["gemma-4-26b-a4b-it", "gemini-flash-latest"]);
+    expect(models).toEqual(["gemma-4-26b-a4b-it", "gemini-flash-lite-latest"]);
   });
 
   it("returns sanitized live output (mocked model)", async () => {

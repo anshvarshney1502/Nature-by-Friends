@@ -10,7 +10,7 @@ const BASE = "https://generativelanguage.googleapis.com/v1beta/openai";
 export function geminiFromEnv(env = process.env): VisionProvider | null {
   const key = env.GEMINI_API_KEY;
   if (!key) return null;
-  const models = [env.GEMINI_MODEL || "gemma-4-26b-a4b-it", env.GEMINI_FALLBACK_MODEL || "gemini-flash-latest"];
+  const models = [env.GEMINI_MODEL || "gemma-4-26b-a4b-it", env.GEMINI_FALLBACK_MODEL || "gemini-flash-lite-latest"];
 
   async function call(model: string, body: object, signal?: AbortSignal) {
     const res = await fetch(`${BASE}/chat/completions`, {
