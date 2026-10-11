@@ -194,6 +194,119 @@ const art: Record<string, ReactNode> = {
       <Smile x={60} y={101} />
     </>
   ),
+  dragonfly: (
+    <>
+      <g className="anim-flutter" opacity="0.9">
+        <ellipse cx="38" cy="40" rx="26" ry="9" transform="rotate(-12 38 40)" fill="#e2f1f7" {...S} strokeWidth={2} />
+        <ellipse cx="82" cy="40" rx="26" ry="9" transform="rotate(12 82 40)" fill="#e2f1f7" {...S} strokeWidth={2} />
+        <ellipse cx="40" cy="56" rx="22" ry="8" transform="rotate(10 40 56)" fill="#cfe8f3" {...S} strokeWidth={2} />
+        <ellipse cx="80" cy="56" rx="22" ry="8" transform="rotate(-10 80 56)" fill="#cfe8f3" {...S} strokeWidth={2} />
+      </g>
+      <path d="M60 52 L 60 112" stroke={INK} strokeWidth="9" strokeLinecap="round" />
+      <path d="M60 52 L 60 112" stroke="#5aa0b8" strokeWidth="5" strokeLinecap="round" />
+      {[66, 76, 86, 96].map((y) => <path key={y} d={`M57 ${y} h6`} stroke="#2f6f86" strokeWidth="2" />)}
+      <ellipse cx="60" cy="46" rx="9" ry="10" fill="#5aa0b8" {...S} />
+      <circle cx="60" cy="28" r="12" fill="#5aa0b8" {...S} />
+      <Eye x={54} y={26} r={5.5} /><Eye x={66} y={26} r={5.5} />
+      <Smile x={60} y={35} w={5} />
+    </>
+  ),
+  grasshopper: (
+    <>
+      <path d="M8 104 Q 60 96 112 104" fill="none" stroke="#3f6e2c" strokeWidth="3" strokeLinecap="round" />
+      <path d="M70 72 L 98 46 L 104 98" fill="none" {...S} stroke="#5f8f2f" strokeWidth={6} />
+      <path d="M70 72 L 98 46 L 104 98" fill="none" {...S} />
+      <path d="M44 80 l -8 22 M54 82 l 0 20" {...S} />
+      <path d="M22 70 C 30 56, 80 58, 96 72 C 84 86, 34 88, 22 70 Z" fill="#8cc152" {...S} />
+      <path d="M40 66 C 60 60, 82 64, 94 72" fill="none" stroke="#5f8f2f" strokeWidth="3" strokeLinecap="round" />
+      <ellipse cx="26" cy="62" rx="15" ry="14" fill="#8cc152" {...S} />
+      <path d="M22 50 q -6 -16 -2 -30 M30 50 q 6 -16 16 -26" fill="none" {...S} />
+      <Eye x={21} y={60} r={5} /><Eye x={32} y={59} r={4.5} />
+      <Smile x={25} y={70} w={5} />
+    </>
+  ),
+  squirrel: (
+    <>
+      <path className="anim-sway" d="M66 98 C 100 104, 116 74, 104 46 C 96 26, 76 24, 74 40 C 90 40, 96 60, 86 76 C 80 86, 70 90, 66 98 Z" fill="#c9824b" {...S} />
+      <path d="M86 50 C 92 58, 92 68, 86 76" fill="none" stroke="#e7b07c" strokeWidth="4" strokeLinecap="round" />
+      <ellipse cx="54" cy="84" rx="22" ry="24" fill="#c9824b" {...S} />
+      <ellipse cx="50" cy="90" rx="12" ry="15" fill="#f1d9b5" />
+      <path d="M44 106 q -6 4 -12 2 M62 106 q 6 4 12 2" {...S} />
+      <circle cx="46" cy="50" r="18" fill="#c9824b" {...S} />
+      <path d="M32 38 l -4 -12 l 10 6 M56 34 l 6 -10 l 2 12" fill="#c9824b" {...S} />
+      <circle cx="36" cy="80" r="7" fill="#8a5a3b" {...S} />
+      <path d="M33 74 q 3 -3 6 0" stroke="#5c4632" strokeWidth="2" fill="none" />
+      <Eye x={40} y={48} r={4.5} /><Eye x={53} y={48} r={4.5} />
+      <circle cx="46" cy="57" r="2.5" fill={INK} />
+      <Cheek x={36} y={57} /><Cheek x={57} y={57} />
+    </>
+  ),
+  crow: (
+    <>
+      <path d="M20 66 L 4 84 L 24 80 Z" fill="#2f3440" {...S} />
+      <ellipse cx="54" cy="72" rx="36" ry="26" fill="#3a4050" {...S} />
+      <path d="M28 66 C 40 56, 66 58, 72 74 C 60 82, 38 80, 28 66 Z" fill="#2f3440" {...S} />
+      <path d="M36 70 l 22 0 M38 75 l 20 1" stroke="#5b6478" strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="84" cy="46" r="20" fill="#3a4050" {...S} />
+      <path d="M100 44 L 118 50 L 100 56 Z" fill="#5c5646" {...S} />
+      <Eye x={88} y={42} r={5.5} />
+      <path d="M72 30 q 6 -6 14 -4" stroke="#6c7690" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <path d="M46 96 l -2 12 l -5 2 M44 108 l 5 2 M62 96 l 0 12 l -5 2 M62 108 l 5 2" fill="none" {...S} />
+    </>
+  ),
+  frog: (
+    <>
+      <ellipse cx="60" cy="104" rx="50" ry="10" fill="#a9d3e8" />
+      <path d="M22 96 C 10 96, 14 82, 28 84 M98 96 C 110 96, 106 82, 92 84" fill="#7cb35a" {...S} />
+      <ellipse cx="60" cy="78" rx="38" ry="26" fill="#7cb35a" {...S} />
+      <ellipse cx="60" cy="86" rx="24" ry="14" fill="#e4f0c8" />
+      <circle cx="40" cy="50" r="14" fill="#7cb35a" {...S} />
+      <circle cx="80" cy="50" r="14" fill="#7cb35a" {...S} />
+      <Eye x={40} y={49} r={8} /><Eye x={80} y={49} r={8} />
+      <path d="M44 72 q 16 12 32 0" fill="none" {...S} />
+      <Cheek x={34} y={72} /><Cheek x={86} y={72} />
+      <path d="M40 100 l -6 6 M44 101 l 0 7 M76 101 l 0 7 M80 100 l 6 6" {...S} />
+    </>
+  ),
+  rose: (
+    <>
+      <path d="M60 64 C 58 84, 62 100, 60 118" fill="none" stroke="#3f6e2c" strokeWidth="4" strokeLinecap="round" />
+      <path d="M58 82 l -5 -3 M61 96 l 5 -3 M59 108 l -5 -2" stroke="#3f6e2c" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M60 90 C 46 78, 30 84, 28 94 C 40 100, 52 98, 60 90 Z" fill="#7cb35a" {...S} />
+      <path d="M61 102 C 74 92, 90 96, 92 104 C 82 110, 68 110, 61 102 Z" fill="#7cb35a" {...S} />
+      <g className="anim-sway">
+        <path d="M30 40 C 26 18, 52 8, 60 20 C 68 8, 94 18, 90 40 C 92 60, 74 70, 60 68 C 46 70, 28 60, 30 40 Z" fill="#e0785f" {...S} />
+        <path d="M42 38 C 40 26, 58 20, 62 30 C 70 24, 82 32, 76 44 C 70 56, 50 56, 42 38 Z" fill="#ec9a86" {...S} strokeWidth={2} />
+        <path d="M54 36 q 6 -8 12 0" fill="none" stroke="#c45a43" strokeWidth="2.5" strokeLinecap="round" />
+        <Eye x={52} y={46} r={4} /><Eye x={68} y={46} r={4} />
+        <Smile x={60} y={55} w={5} />
+      </g>
+    </>
+  ),
+  mushroom: (
+    <>
+      <path d="M10 108 Q 60 98 110 108 L 110 118 L 10 118 Z" fill="#8a5a3b" {...S} />
+      <path d="M44 70 C 42 88, 44 100, 42 108 L 78 108 C 76 100, 78 88, 76 70 Z" fill="#f4ead2" {...S} />
+      <path d="M14 66 C 14 30, 106 30, 106 66 C 90 74, 30 74, 14 66 Z" fill="#e0785f" {...S} />
+      <circle cx="40" cy="48" r="6" fill="#fbf5e6" /><circle cx="64" cy="40" r="7" fill="#fbf5e6" /><circle cx="86" cy="54" r="5" fill="#fbf5e6" />
+      <Eye x={53} y={86} r={4.5} /><Eye x={67} y={86} r={4.5} />
+      <Smile x={60} y={96} w={5} />
+      <Cheek x={47} y={95} /><Cheek x={73} y={95} />
+    </>
+  ),
+  moss: (
+    <>
+      <ellipse cx="60" cy="96" rx="52" ry="20" fill="#b8b0a0" {...S} />
+      <path d="M12 92 C 14 66, 40 62, 50 70 C 56 54, 82 54, 88 68 C 100 62, 112 76, 108 92 C 80 100, 40 100, 12 92 Z" fill="#6ea64b" {...S} />
+      {[22, 34, 46, 58, 70, 82, 94].map((x, i) => (
+        <path key={x} d={`M${x} ${84 - (i % 3) * 3} q ${i % 2 ? 2 : -2} -6 0 -10`} stroke="#3f6e2c" strokeWidth="2" fill="none" strokeLinecap="round" />
+      ))}
+      <path d="M70 66 C 70 50, 74 40, 78 34 M44 70 C 42 54, 40 46, 38 40" fill="none" stroke="#8a5a3b" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="78" cy="32" r="3" fill="#c99868" {...S} strokeWidth={1.5} /><circle cx="38" cy="38" r="3" fill="#c99868" {...S} strokeWidth={1.5} />
+      <Eye x={52} y={80} r={4.5} /><Eye x={66} y={80} r={4.5} />
+      <Smile x={59} y={89} w={5} />
+    </>
+  ),
 };
 
 export const creatureSlugs = Object.keys(art);

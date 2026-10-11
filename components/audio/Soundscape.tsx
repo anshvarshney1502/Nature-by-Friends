@@ -8,25 +8,28 @@ const KEY = "nbf.soundscape.v1";
 type Prefs = { on: boolean; scene: SceneId | null; volume: number };
 
 /**
- * Ambient nature loops (ElevenLabs Sound Effects). Off until the visitor turns it on.
+ * Ambient nature loops (ElevenLabs Sound Effects). On by default; browsers only allow sound after
+ * the first tap or key press, so playback starts then. The header button turns it off (remembered).
  * Fades between scenes and ducks under the narrator (AudioPlayer sends "nbf:narration").
  */
 export function Soundscape() {
   const path = usePathname();
   const audio = useRef<HTMLAudioElement | null>(null);
   const fade = useRef<number | null>(null);
-  const [prefs, setPrefs] = useState<Prefs>({ on: false, scene: null, volume: 0.35 });
+  const [prefs, setPrefs] = useState<Prefs>({ on: true, scene: null, volume: 0.8 });
   const [ducked, setDucked] = useState(false);
   const [open, setOpen] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
   const scene = prefs.scene ?? sceneForPath(path);
 
-  // Restore saved choice of scene and volume, but never auto-start sound on a new visit.
+  const [unlocked, setUnlocked] = useState(false);
+
+  // Restore saved choices (including "off").
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(KEY) ?? "null") as Partial<Prefs> | null;
       // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate from localStorage once on mount
-      if (saved) setPrefs((p) => ({ ...p, scene: saved.scene ?? null, volume: saved.volume ?? p.volume }));
+      if (saved) setPrefs((p) => ({ on: saved.on ?? p.on, scene: saved.scene ?? null, volume: saved.volume ?? p.volume }));
     } catch {
       /* storage unavailable: defaults are fine */
     }
@@ -40,6 +43,15 @@ export function Soundscape() {
     }
   }, [prefs]);
 
+  // Browsers block sound until the visitor interacts; start on the first tap/key anywhere.
+  useEffect(() => {
+    if (unlocked) return;
+    const go = () => setUnlocked(true);
+    window.addEventListener("pointerdown", go, { once: true });
+    window.addEventListener("keydown", go, { once: true });
+    return () => { window.removeEventListener("pointerdown", go); window.removeEventListener("keydown", go); };
+  }, [unlocked]);
+
   useEffect(() => {
     const onNarration = (e: Event) => setDucked((e as CustomEvent<boolean>).detail);
     window.addEventListener("nbf:narration", onNarration);
@@ -50,7 +62,7 @@ export function Soundscape() {
     const a = audio.current;
     if (!a) return;
     if (fade.current) cancelAnimationFrame(fade.current);
-    const start = a.volume, t0 = performance.now(), ms = 600;
+    const start = a.volume, t0 = performance.now(), ms = 700;
     const step = (t: number) => {
       const k = Math.min(1, (t - t0) / ms);
       a.volume = start + (target - start) * k;
@@ -67,16 +79,17 @@ export function Soundscape() {
       fadeTo(0, () => audio.current?.pause());
       return;
     }
+    if (!unlocked) return;
     const swap = () => {
       audio.current ??= Object.assign(new Audio(), { loop: true, volume: 0, preload: "auto" });
       const a = audio.current;
       if (!a.src.endsWith(src)) a.src = src;
-      a.play().then(() => fadeTo(ducked ? prefs.volume * 0.2 : prefs.volume)).catch(() => setPrefs((p) => ({ ...p, on: false })));
+      a.play().then(() => fadeTo(ducked ? prefs.volume * 0.2 : prefs.volume)).catch(() => setUnlocked(false)); // still blocked: retry on the next tap
     };
     if (audio.current && !audio.current.paused && !audio.current.src.endsWith(src)) fadeTo(0, swap);
     else swap();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- volume/duck changes are handled by the effect below
-  }, [prefs.on, scene]);
+  }, [prefs.on, scene, unlocked]);
 
   useEffect(() => {
     if (prefs.on && audio.current && !audio.current.paused) fadeTo(ducked ? prefs.volume * 0.2 : prefs.volume);
@@ -141,7 +154,7 @@ export function Soundscape() {
             </fieldset>
             <label className="mt-3 block text-sm font-bold text-forest">
               Volume
-              <input type="range" min={0.05} max={0.8} step={0.05} value={prefs.volume}
+              <input type="range" min={0.05} max={1} step={0.05} value={prefs.volume}
                 onChange={(e) => setPrefs((p) => ({ ...p, volume: Number(e.target.value) }))}
                 className="mt-1 w-full accent-[var(--color-moss)]" />
             </label>

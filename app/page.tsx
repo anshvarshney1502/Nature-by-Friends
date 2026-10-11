@@ -59,6 +59,19 @@ export default function Home() {
         </div>
       </section>
 
+      <section aria-labelledby="listen" className="grid items-center gap-6 md:grid-cols-[1fr_1.2fr]">
+        <div className="flex justify-center gap-2">
+          {["frog", "sparrow", "grasshopper"].map((s, k) => (
+            <div key={s} className="anim-bob" style={{ animationDelay: `${k * 0.5}s` }}><Creature slug={s} className="h-24 w-24 sm:h-28 sm:w-28" /></div>
+          ))}
+        </div>
+        <div>
+          <h2 id="listen" className="text-3xl font-semibold">Can you guess who&apos;s singing?</h2>
+          <p className="mt-2 text-ink-soft">Play Sound Safari: hear a buzz, a croak or a chirp, and guess which friend made it. Then try the Quiet Minute and listen to the real world.</p>
+          <Link href="/listen" className="btn btn-soft mt-4">Open the Listening Corner</Link>
+        </div>
+      </section>
+
       <section aria-labelledby="journey" className="card relative overflow-hidden bg-sky-soft p-6 md:p-10">
         <h2 id="journey" className="text-3xl font-semibold">Your friendship journey</h2>
         <p className="mt-2 text-ink-soft">Six small steps. Most of them happen with the phone in your pocket.</p>

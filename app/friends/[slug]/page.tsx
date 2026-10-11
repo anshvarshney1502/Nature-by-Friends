@@ -6,8 +6,11 @@ import { Creature } from "@/components/illustrations/Creature";
 import { AudioPlayer } from "@/components/audio/AudioPlayer";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { profileText } from "@/lib/content/narration";
+import { HearMe } from "@/components/audio/HearMe";
 
 export const generateStaticParams = () => friends.map((f) => ({ slug: f.slug }));
+// Every profile is prebuilt, so blocking on params is instant in practice.
+export const instant = false;
 
 export async function generateMetadata({ params }: PageProps<"/friends/[slug]">): Promise<Metadata> {
   const f = getFriend((await params).slug);
@@ -46,6 +49,7 @@ export default async function FriendPage({ params }: PageProps<"/friends/[slug]"
             <Link href={`/missions?friend=${f.slug}`} className="btn btn-primary">Start an observation</Link>
             <AudioPlayer text={profileText(f)} label="Listen" />
           </div>
+          <div className="mt-3"><HearMe slug={f.slug} name={f.name} /></div>
         </div>
       </header>
 

@@ -12,6 +12,7 @@ import { AudioPlayer } from "@/components/audio/AudioPlayer";
 import { missionText } from "@/lib/content/narration";
 import { PhotoHelper } from "./PhotoHelper";
 import { Bloom } from "./Bloom";
+import { QuietMinute } from "@/components/audio/QuietMinute";
 
 const STEPS = ["Meet", "Discover", "Respect", "Go outside", "Reflect", "Remember"];
 const KEY = "nbf.mission.v1";
@@ -223,7 +224,8 @@ export function MissionJourney() {
                   <li>• Watch quietly from a respectful distance.</li>
                   <li>• Come back and tell your journal what you noticed.</li>
                 </ul>
-                <button className="btn mt-8 bg-butter text-forest shadow-[0_4px_0_#c9a440]" onClick={() => go(4)}>I&apos;m back!</button>
+                <div className="mt-6"><QuietMinute compact /></div>
+                <button className="btn mt-4 bg-leaf text-white shadow-[0_4px_0_#16301d]" onClick={() => go(4)}>I&apos;m back!</button>
                 <button className="btn btn-ghost mt-2 text-paper/80" onClick={() => go(2)}>Back</button>
               </div>
             </Panel>

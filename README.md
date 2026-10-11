@@ -10,11 +10,12 @@ Kids pick a little neighbour, get a short outdoor mission, learn its boundaries,
 | Route | What it does |
 |---|---|
 | `/` | Illustrated garden welcome, the "how friends behave" promises, and a preview of the journey |
-| `/garden` | 12 curated friends with search, category filters, category activities, "Surprise me" |
+| `/garden` | 20 curated friends with search, category filters, category activities, "Surprise me" |
 | `/friends/[slug]` | Profile: facts, habitat, why it matters, safe watching, what not to do, mission, related friends, read-aloud |
 | `/missions` | 6-step journey: Meet, Discover, Respect, Go outside, Reflect, Remember. Optional photo helper. Progress survives closing the app |
 | `/journal` | Local timeline, return visits with a "Then and now" comparison, opt-in revisit notes, text export |
-| `/stories` | 12 tiny stories that mark real facts (leaf) apart from imagination (spark), with read-aloud |
+| `/stories` | 20 tiny stories that mark real facts (leaf) apart from imagination (spark), with read-aloud |
+| `/listen` | Listening Corner: Sound Safari (hear a creature, guess who, narrator reveals a fact) and the Quiet Minute guided listening |
 | `/ecosystem` | Friendship Web: SVG node graph with 16 curated relationships |
 | `/parents` | Purpose, safety, AI limits, privacy, and what hasn't been reviewed |
 | `/api/identify` | Photo, then Google Gemini API, then zod schema, then safety sanitizer, then a designed result |
@@ -42,12 +43,16 @@ Put `ELEVENLABS_API_KEY` in `.env.local` (git-ignored). The narrator voice defau
 npm run audio:generate   # reads .env.local
 ```
 
-### Nature soundscape
-Three ambient loops (meadow, rain on soil, evening crickets) made with the **ElevenLabs Sound Effects API** and committed in `public/sounds/`. A header toggle plays them (off by default), picks a scene to match the page, and ducks the volume while the narrator speaks. Regenerate with `npm run sounds:generate`.
+### ElevenLabs sound (all pre-generated, zero runtime credits)
+- **Nature soundscape:** 3 looping scenes (chirpy garden, rain on soil, evening crickets) from the Sound Effects API. On by default; it starts at the first tap (browsers block earlier audio), matches the page, and ducks under the narrator.
+- **Hear me:** 20 creature clips. Real calls for animals that make sounds; for quiet ones, the sound of where they live (labelled honestly).
+- **Sound Safari:** 7 creature calls plus narrator reveals in the same voice.
+- **Quiet Minute:** about 40 s of guided outdoor listening in the narrator voice, using ElevenLabs break tags for pauses.
+- **Narration:** profiles, missions and stories (`npm run audio:generate`). Everything else: `npm run sounds:generate`. Both skip files that already exist.
 
 ### MongoDB Atlas (optional)
 ```bash
-npm run seed:mongo   # reads MONGODB_URI from .env.local;   # creates nature_profiles with a $jsonSchema validator, upserts 12 profiles
+npm run seed:mongo   # reads MONGODB_URI from .env.local;   # creates nature_profiles with a $jsonSchema validator, upserts all curated profiles
 ```
 Give the deployed app a **read-only** database user. Pages are statically rendered from the bundled content. Atlas backs `/api/content` so profiles can be edited without a redeploy. Vector Search is not used.
 

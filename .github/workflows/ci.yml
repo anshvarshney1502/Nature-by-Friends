@@ -24,7 +24,7 @@ jobs:
           npm run start -- -p 3100 &
           for i in $(seq 1 30); do curl -sf localhost:3100/api/health && break; sleep 1; done
           curl -sf localhost:3100/api/health | grep '"ok":true'
-          for p in / /garden /friends/earthworm /missions /journal /stories /ecosystem /parents; do
+          for p in / /garden /friends/earthworm /friends/frog /missions /journal /stories /ecosystem /listen /parents; do
             curl -sf -o /dev/null "localhost:3100$p" || { echo "FAIL $p"; exit 1; }
           done
       - run: npm audit --omit=dev --audit-level=high

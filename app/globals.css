@@ -108,12 +108,14 @@ h1, h2, h3 {
 @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
 @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 @keyframes flutter { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.6); } }
+@keyframes breathe { 0%, 100% { transform: scale(0.8); opacity: 0.7; } 50% { transform: scale(1.05); opacity: 1; } }
 @keyframes drift { 0% { transform: translate(0, 0); } 33% { transform: translate(14px, -10px); } 66% { transform: translate(-8px, -4px); } 100% { transform: translate(0, 0); } }
 
 .anim-sway { animation: sway 5s ease-in-out infinite; transform-box: fill-box; transform-origin: bottom center; }
 .anim-blink { animation: blink 5s infinite; transform-box: fill-box; transform-origin: center; }
 .anim-bob { animation: bob 3.5s ease-in-out infinite; }
 .anim-flutter { animation: flutter 0.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.anim-breathe { animation: breathe 6s ease-in-out infinite; }
 .anim-drift { animation: drift 9s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {

@@ -19,6 +19,7 @@ describe("safety validator", () => {
     "Watch from two big steps away.",
     "Look without touching.",
     "Never go near a hive.",
+    "Count the petals on one flower.",
   ])("allows %s", (t) => expect(isSafe(t)).toBe(true));
 
   it("finds the offending sentence", () => {
