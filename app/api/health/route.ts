@@ -7,7 +7,7 @@ export async function GET() {
   return NextResponse.json({
     ok: true,
     services: {
-      gemma: process.env.GEMMA_API_BASE_URL ? "configured" : "demo",
+      gemini: process.env.GEMINI_API_KEY ? "configured" : "demo",
       elevenlabs: elevenlabsConfigured() ? "configured" : "device-voice-fallback",
       mongodb: process.env.MONGODB_URI ? "configured" : "bundled-content",
     },

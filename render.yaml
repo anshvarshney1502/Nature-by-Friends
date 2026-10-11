@@ -1,5 +1,5 @@
 # Render Blueprint: one Node web service serves pages and /api/* (Next.js).
-# The Gemma model is NOT run here — point GEMMA_API_BASE_URL at an external endpoint.
+# The photo helper calls the Google Gemini API (set GEMINI_API_KEY).
 # Plan "starter" avoids free-tier cold starts during judging; "free" also works. Check current Render pricing.
 services:
   - type: web
@@ -13,11 +13,7 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "24"
-      - key: GEMMA_MODEL
-        value: gemma4:e4b
-      - key: GEMMA_API_BASE_URL
-        sync: false
-      - key: GEMMA_API_KEY
+      - key: GEMINI_API_KEY
         sync: false
       - key: ELEVENLABS_API_KEY
         sync: false

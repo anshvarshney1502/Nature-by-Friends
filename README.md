@@ -17,7 +17,7 @@ Kids pick a little neighbour, get a short outdoor mission, learn its boundaries,
 | `/stories` | 12 tiny stories that mark real facts (leaf) apart from imagination (spark), with read-aloud |
 | `/ecosystem` | Friendship Web: SVG node graph with 16 curated relationships |
 | `/parents` | Purpose, safety, AI limits, privacy, and what hasn't been reviewed |
-| `/api/identify` | Photo, then Gemma (OpenAI-compatible endpoint), then zod schema, then safety sanitizer, then a designed result |
+| `/api/identify` | Photo, then Google Gemini API, then zod schema, then safety sanitizer, then a designed result |
 | `/api/audio` | ElevenLabs narration of curated text only, cached; the client falls back to the device voice |
 | `/api/content` | Curated profiles from MongoDB Atlas, or the bundled copy if Atlas is unset or down |
 | `/api/health` | Shows which optional services are configured |
@@ -33,12 +33,8 @@ npm run lint && npm run typecheck && npm run build
 
 No environment variables are needed. See `.env.example` for the optional services.
 
-### Gemma photo helper (optional)
-```bash
-ollama pull gemma4:e4b          # small Gemma 4 variant with image input, ~6 GB RAM
-GEMMA_API_BASE_URL=http://localhost:11434/v1 GEMMA_MODEL=gemma4:e4b npm run dev
-```
-Any OpenAI-compatible endpoint serving a vision-capable Gemma works (vLLM, LM Studio, hosted). Your laptop's Ollama is **not** reachable from a Render or Vercel deployment. A public demo needs a hosted endpoint.
+### Gemini photo helper (optional)
+Create a key at https://aistudio.google.com/apikey and put `GEMINI_API_KEY=...` in `.env.local` (and in Render's env vars). Optional `GEMINI_MODEL` (default `gemini-flash-latest`). On Google's free tier, submitted content may be used by Google to improve its services; the Parents page says so.
 
 ### ElevenLabs (optional)
 Put `ELEVENLABS_API_KEY` in `.env.local` (git-ignored). The narrator voice defaults to `EeQEodFZVtBkjtgK3HBc`; override with `ELEVENLABS_VOICE_ID`. To pre-generate the ~37 clips (about 12k characters) into `public/audio/` so visitors don't spend credits:
@@ -72,10 +68,10 @@ Give the deployed app a **read-only** database user. Pages are statically render
 **Vercel:** Import the repo. The framework preset is Next.js and needs no config. Add the same env vars. Runtime audio caching is ephemeral on both hosts, so commit pre-generated `public/audio/*.mp3` for the demo.
 
 ## Services that may cost money
-Render (paid plans), hosted Gemma inference, ElevenLabs characters, and MongoDB Atlas above the free tier. Free tiers change, so check them before the demo.
+Render (paid plans), Gemini API usage above the free tier, ElevenLabs characters, and MongoDB Atlas above the free tier. Free tiers change, so check them before the demo.
 
 ## Honest status
-- Integrations are tested with **mocked** HTTP only. A live Gemma, ElevenLabs or Atlas call has not been verified in this repo, so verify with real credentials before claiming it works.
+- Integrations are tested with **mocked** HTTP only. ElevenLabs and MongoDB Atlas have been verified live; the Gemini photo helper still needs a key and a live test.
 - In-memory rate limiting is per instance.
 - Content has not been reviewed by an ecologist, and the app has had no legal or privacy compliance review.
 - English only. Content is plain TypeScript data, ready to be split per locale.

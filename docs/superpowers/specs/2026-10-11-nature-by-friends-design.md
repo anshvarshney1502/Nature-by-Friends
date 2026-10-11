@@ -13,7 +13,7 @@ Kids 6–10 receive a short outdoor observation mission, put the phone away, the
 
 ## Slices (TASKS)
 1. [x] Core: tokens, illustrations, 12 profiles, Home, Garden, Profile, Mission journey, Journal (+ Return Visit compare), Stories, Friendship Web, Parents.
-2. [x] Gemma: `lib/ai/*`, `/api/identify` (OpenAI-compatible endpoint, default small Gemma E4B variant via `GEMMA_MODEL`; verify image support of chosen tag), zod schema, safety filter, curated fallback.
+2. [x] Photo helper: `lib/ai/*`, `/api/identify` via Google Gemini API (`GEMINI_API_KEY`); switched from self-hosted Gemma because free self-hosting (HF Spaces) now needs PRO. Zod schema, safety filter, curated fallback.
 3. [x] ElevenLabs: `lib/audio/elevenlabs.ts`, `/api/audio` with disk cache, `AudioPlayer` (play/pause/replay/speed), text fallback.
 4. [x] MongoDB Atlas: optional `MONGODB_URI`; `/api/content` reads `nature_profiles`, seeds from curated JSON, falls back to bundled content.
 5. [x] Ship: `/api/health`, rate limit + size limits, `render.yaml`, Vercel notes, `.env.example`, GitHub Actions (lint, typecheck, test, build), README.

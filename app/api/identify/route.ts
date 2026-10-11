@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { gemmaFromEnv } from "@/lib/ai/gemma-provider";
+import { geminiFromEnv } from "@/lib/ai/gemini-provider";
 import { identifySystemPrompt, identifyUserText } from "@/lib/ai/prompts";
 import { extractJson, fallbackResult, sanitize } from "@/lib/ai/safety";
 import { identifyRequestSchema, type IdentifyResponse } from "@/lib/ai/schemas";
@@ -15,12 +15,12 @@ export async function POST(req: Request) {
   const parsed = identifyRequestSchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return fail(400, "invalid_request", parsed.error.issues[0]?.message ?? "Invalid request");
 
-  const provider = gemmaFromEnv();
+  const provider = geminiFromEnv();
   if (!provider) {
     return NextResponse.json<IdentifyResponse>({
       mode: "demo",
       result: fallbackResult(),
-      notice: "No Gemma endpoint is configured (GEMMA_API_BASE_URL), so photos aren't analysed.",
+      notice: "No GEMINI_API_KEY is configured, so photos aren't analysed.",
     });
   }
 

@@ -30,7 +30,7 @@ const sections: { h: string; p: React.ReactNode }[] = [
     h: "Photos and the nature helper (AI)",
     p: (
       <>
-        Photos are optional. When a child chooses a photo, it is shrunk on the device (which also strips location data embedded in the file). It is only sent to our nature helper — an open-weight Gemma model — if the child taps “Ask about this photo”, and it is not stored on our server.
+        Photos are optional. When a child chooses a photo, it is shrunk on the device (which also strips location data embedded in the file). It is only sent to our nature helper — Google’s Gemini API — if the child taps “Ask about this photo”. It is not stored on our server. On Google’s free tier, Google may use submitted content to improve its services, so please only send photos of plants and animals, never of people.
         <ul className="mt-2 list-disc space-y-1 pl-6">
           <li>The helper can be wrong. Its answer is shown as “might be” or “not sure”, never as a confirmed identification.</li>
           <li>Its confidence label is the model&apos;s own estimate, not a measured accuracy.</li>
