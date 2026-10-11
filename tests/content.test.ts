@@ -5,6 +5,7 @@ import { creatureSlugs } from "@/components/illustrations/Creature";
 import { webLinks, webNodes } from "@/lib/content/web";
 import { quietMinuteParts } from "@/lib/content/creatureSounds";
 import { existsSync } from "node:fs";
+import { tourSlides } from "@/lib/content/tour";
 
 describe("content source", () => {
   afterEach(() => vi.unstubAllEnvs());
@@ -44,5 +45,15 @@ describe("content source", () => {
   it("every pre-generated sound file exists", () => {
     for (let i = 1; i <= quietMinuteParts.length; i++) expect(existsSync(`public/audio/quiet/${i}.mp3`), `quiet ${i}`).toBe(true);
     for (const f of friends) expect(existsSync(`public/sounds/creatures/${f.slug}.mp3`), f.slug).toBe(true);
+  });
+
+  it("tour: every slide has narration, real characters and a real page", () => {
+    const pages = new Set(["/garden", "/missions", "/listen", "/journal", "/ecosystem", "/stories", "/parents"]);
+    for (const t of tourSlides) {
+      expect(existsSync(`public/audio/tour/${t.id}.mp3`), t.id).toBe(true);
+      for (const c of t.creatures) expect(creatureSlugs, `${t.id}: ${c}`).toContain(c);
+      if (t.href) expect(pages.has(t.href), t.href).toBe(true);
+      expect(existsSync(`app${t.href ?? ""}/page.tsx`), `page for ${t.href}`).toBe(true);
+    }
   });
 });

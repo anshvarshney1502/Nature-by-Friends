@@ -9,6 +9,7 @@ Kids pick a little neighbour, get a short outdoor mission, learn its boundaries,
 
 | Route | What it does |
 |---|---|
+| (first visit) | **Guided tour**: 9 narrated slides covering every feature on a 3D tilting paper stage, with page-flip transitions. Skippable, and replayable from the footer and home page |
 | `/` | Illustrated garden welcome, the "how friends behave" promises, and a preview of the journey |
 | `/garden` | 20 curated friends with search, category filters, category activities, "Surprise me" |
 | `/friends/[slug]` | Profile: facts, habitat, why it matters, safe watching, what not to do, mission, related friends, read-aloud |
@@ -48,6 +49,7 @@ npm run audio:generate   # reads .env.local
 - **Hear me:** 20 creature clips. Real calls for animals that make sounds; for quiet ones, the sound of where they live (labelled honestly).
 - **Sound Safari:** 7 creature calls plus narrator reveals in the same voice.
 - **Quiet Minute:** about 1 minute of guided outdoor listening: 9 narrated parts with timed silences, during which the nature soundscape comes back up.
+- **Guided tour:** 9 slides narrated in the same voice.
 - **Narration:** profiles, missions and stories (`npm run audio:generate`). Everything else: `npm run sounds:generate`. Both skip files that already exist.
 
 ### MongoDB Atlas (optional)

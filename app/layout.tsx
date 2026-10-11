@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { Fredoka, Nunito } from "next/font/google";
 import { Nav } from "@/components/layout/Nav";
+import { OnboardingTour, TourButton } from "@/components/tour/OnboardingTour";
 import "./globals.css";
 
 const fredoka = Fredoka({ variable: "--font-fredoka", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
@@ -27,9 +28,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <footer className="border-t-2 border-leaf/15 px-4 pb-24 pt-6 text-sm text-ink-soft md:pb-6">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
             <p>Step outside. Look closer. Discover a little wonder.</p>
-            <Link href="/parents" className="btn-ghost font-bold">For parents &amp; educators</Link>
+            <div className="flex flex-wrap items-center gap-4">
+              <TourButton className="btn-ghost inline-flex items-center gap-1.5 font-bold" />
+              <Link href="/parents" className="btn-ghost font-bold">For parents &amp; educators</Link>
+            </div>
           </div>
         </footer>
+        <OnboardingTour />
       </body>
     </html>
   );
