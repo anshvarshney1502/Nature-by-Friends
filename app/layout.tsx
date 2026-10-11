@@ -36,11 +36,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <footer className="border-t-2 border-leaf/15 px-4 pb-24 pt-6 text-sm text-ink-soft md:pb-6">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
+          <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
             <p>Step outside. Look closer. Discover a little wonder.</p>
-            <div className="flex flex-wrap items-center gap-4">
-              <TourButton className="btn-ghost inline-flex items-center gap-1.5 font-bold" />
-              <Link href="/parents" className="btn-ghost font-bold">For parents &amp; educators</Link>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1">
+              <TourButton className="btn-ghost inline-flex cursor-pointer items-center gap-1.5 font-bold" />
+              <Link href="/parents" className="btn-ghost inline-flex items-center font-bold">For parents &amp; educators</Link>
             </div>
           </div>
         </footer>

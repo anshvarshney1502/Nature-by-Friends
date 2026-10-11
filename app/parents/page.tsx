@@ -59,8 +59,8 @@ const sections: { h: string; p: React.ReactNode }[] = [
     ),
   },
   {
-    h: "What we haven't done",
-    p: "This is a hackathon project. It has not had a formal legal or child-privacy compliance review, and its nature content has not been reviewed by a professional ecologist. Please use it as a companion to, not a replacement for, adult guidance.",
+    h: "Good to know",
+    p: "Nature by Friends has not had a formal legal or child-privacy compliance review, and its nature content has not been reviewed by a professional ecologist. Please use it as a companion to, not a replacement for, adult guidance.",
   },
 ];
 
