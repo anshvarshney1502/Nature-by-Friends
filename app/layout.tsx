@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { Fredoka, Nunito } from "next/font/google";
 import { Nav } from "@/components/layout/Nav";
+import { SITE_URL } from "@/lib/config/site";
 import { OnboardingTour, TourButton } from "@/components/tour/OnboardingTour";
 import "./globals.css";
 
@@ -11,6 +12,15 @@ const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"] });
 export const metadata: Metadata = {
   title: { default: "Nature by Friends", template: "%s · Nature by Friends" },
   description: "Meet the little lives that share your world. Become a friend, not an owner.",
+  metadataBase: new URL(SITE_URL),
+  applicationName: "Nature by Friends",
+  openGraph: {
+    type: "website",
+    siteName: "Nature by Friends",
+    title: "Nature by Friends: become a friend, not an owner",
+    description: "A storybook nature app for kids: tiny outdoor missions, 20 nature friends, Sound Safari and a private nature journal.",
+  },
+  twitter: { card: "summary", title: "Nature by Friends", description: "Meet the little lives that share your world." },
 };
 export const viewport: Viewport = { themeColor: "#fbf5e6" };
 

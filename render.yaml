@@ -1,13 +1,14 @@
 # Render Blueprint: one Node web service serves pages and /api/* (Next.js).
 # The photo helper calls the Google Gemini API (set GEMINI_API_KEY).
-# Plan "starter" avoids free-tier cold starts during judging; "free" also works. Check current Render pricing.
+# Free plan (what the live demo uses): sleeps when idle, so the first visit takes ~1 min. "starter" avoids that (paid).
 services:
   - type: web
     name: nature-by-friends
     runtime: node
-    plan: starter
+    plan: free
     buildCommand: npm ci && npm run build
-    startCommand: npm run start -- -p $PORT
+    # next start reads $PORT from Render
+    startCommand: npm run start
     healthCheckPath: /api/health
     autoDeploy: true
     envVars:
