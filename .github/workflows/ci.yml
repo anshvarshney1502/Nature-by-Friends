@@ -1,0 +1,31 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: Smoke test production server
+        run: |
+          npm run start -- -p 3100 &
+          for i in $(seq 1 30); do curl -sf localhost:3100/api/health && break; sleep 1; done
+          curl -sf localhost:3100/api/health | grep '"ok":true'
+          for p in / /garden /friends/earthworm /missions /journal /stories /ecosystem /parents; do
+            curl -sf -o /dev/null "localhost:3100$p" || { echo "FAIL $p"; exit 1; }
+          done
+      - run: npm audit --omit=dev --audit-level=high
+        continue-on-error: true

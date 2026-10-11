@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #fbf5e6;
+  --color-paper-deep: #f3e8cc;
+  --color-card: #fffaf0;
+  --color-ink: #2d2a22;
+  --color-ink-soft: #5c5646;
+  --color-leaf: #4f8a2e;
+  --color-leaf-soft: #cfe5b4;
+  --color-moss: #3f6e2c;
+  --color-forest: #24452a;
+  --color-sky: #a9d3e8;
+  --color-sky-soft: #e2f1f7;
+  --color-butter: #f6d77a;
+  --color-butter-soft: #fbedc2;
+  --color-coral: #d0654c;
+  --color-coral-soft: #f7d6cb;
+  --color-bark: #8a5a3b;
+
+  --font-display: var(--font-fredoka), ui-rounded, system-ui, sans-serif;
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+
+  --radius-blob: 2rem 1.6rem 2.2rem 1.4rem;
+  --shadow-paper: 0 1px 0 #fff inset, 0 2px 0 rgb(45 42 34 / 0.06), 0 10px 24px -12px rgb(63 110 44 / 0.35);
+}
+
+@layer base {
+html {
+  background: var(--color-paper);
+}
+
+body {
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  /* soft paper grain */
+  background-color: var(--color-paper);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  color: var(--color-forest);
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-coral);
+  outline-offset: 3px;
+  border-radius: 0.75rem;
+}
+}
+
+@layer components {
+  .card {
+    background: var(--color-card);
+    border: 2px solid rgb(63 110 44 / 0.18);
+    border-radius: var(--radius-blob);
+    box-shadow: var(--shadow-paper);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.7rem 1.4rem;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background-color 0.2s;
+  }
+  .btn:active { transform: translateY(3px); }
+  .btn-primary { background: var(--color-leaf); color: #fff; box-shadow: 0 4px 0 var(--color-forest); }
+  .btn-primary:hover { background: var(--color-moss); }
+  .btn-primary:active { box-shadow: 0 1px 0 var(--color-forest); }
+  .btn-soft { background: var(--color-butter-soft); color: var(--color-forest); box-shadow: 0 3px 0 #d9b85a; }
+  .btn-soft:hover { background: var(--color-butter); }
+  .btn-ghost { color: var(--color-moss); text-decoration: underline; text-underline-offset: 4px; min-height: 2.75rem; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    padding: 0.25rem 0.75rem; border-radius: 999px;
+    font-size: 0.875rem; font-weight: 700;
+  }
+  .field {
+    width: 100%;
+    background: #fffdf7;
+    border: 2px solid rgb(63 110 44 / 0.25);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    font: inherit;
+  }
+  .field:focus { border-color: var(--color-leaf); outline: none; box-shadow: 0 0 0 4px var(--color-leaf-soft); }
+  .doodle-underline {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8 Q 50 2 100 7 T 198 5' fill='none' stroke='%23f6d77a' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E") bottom / 100% 0.45em no-repeat;
+    padding-bottom: 0.08em;
+  }
+}
+
+@keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes flutter { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.6); } }
+@keyframes drift { 0% { transform: translate(0, 0); } 33% { transform: translate(14px, -10px); } 66% { transform: translate(-8px, -4px); } 100% { transform: translate(0, 0); } }
+
+.anim-sway { animation: sway 5s ease-in-out infinite; transform-box: fill-box; transform-origin: bottom center; }
+.anim-blink { animation: blink 5s infinite; transform-box: fill-box; transform-origin: center; }
+.anim-bob { animation: bob 3.5s ease-in-out infinite; }
+.anim-flutter { animation: flutter 0.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.anim-drift { animation: drift 9s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

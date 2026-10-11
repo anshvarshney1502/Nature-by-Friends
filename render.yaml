@@ -1,0 +1,29 @@
+# Render Blueprint: one Node web service serves pages and /api/* (Next.js).
+# The Gemma model is NOT run here — point GEMMA_API_BASE_URL at an external endpoint.
+# Plan "starter" avoids free-tier cold starts during judging; "free" also works. Check current Render pricing.
+services:
+  - type: web
+    name: nature-by-friends
+    runtime: node
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start -- -p $PORT
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: GEMMA_MODEL
+        value: gemma4:e4b
+      - key: GEMMA_API_BASE_URL
+        sync: false
+      - key: GEMMA_API_KEY
+        sync: false
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: ELEVENLABS_VOICE_ID
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
