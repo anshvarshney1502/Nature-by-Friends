@@ -29,7 +29,7 @@ export async function POST(req: Request) {
       system: identifySystemPrompt(),
       text: identifyUserText,
       imageDataUrl: parsed.data.image,
-      signal: AbortSignal.timeout(45_000),
+      signal: AbortSignal.timeout(55_000),
     });
     const result = sanitize(extractJson(text));
     return NextResponse.json<IdentifyResponse>({

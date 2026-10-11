@@ -80,6 +80,18 @@ describe("/api/identify", () => {
     expect(JSON.stringify(body)).not.toContain("boom");
   });
 
+  it("retries on the fallback model when Gemma 4 errors", async () => {
+    vi.stubEnv("GEMINI_API_KEY", "test-key");
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(new Response("err", { status: 500 }))
+      .mockResolvedValueOnce(Response.json({ choices: [{ message: { content: JSON.stringify(good) } }] }));
+    vi.stubGlobal("fetch", fetchMock);
+    const body = await (await identify(req({ image: img }))).json();
+    expect(body.mode).toBe("live");
+    const models = fetchMock.mock.calls.map((c) => JSON.parse((c[1] as RequestInit).body as string).model);
+    expect(models).toEqual(["gemma-4-26b-a4b-it", "gemini-flash-latest"]);
+  });
+
   it("returns sanitized live output (mocked model)", async () => {
     vi.stubEnv("GEMINI_API_KEY", "test-key");
     const fetchMock = vi.fn(async () => Response.json({ choices: [{ message: { content: JSON.stringify({ ...good, observationMission: ["Catch it in a jar."] }) } }] }));
@@ -88,7 +100,7 @@ describe("/api/identify", () => {
     expect(body.mode).toBe("live");
     expect(body.result.missionReplaced).toBe(true);
     const sent = JSON.parse((fetchMock.mock.calls[0] as unknown as [string, RequestInit])[1].body as string);
-    expect(sent.model).toBe("gemini-flash-latest");
+    expect(sent.model).toBe("gemma-4-26b-a4b-it");
     expect((fetchMock.mock.calls[0] as unknown as [string])[0]).toContain("generativelanguage.googleapis.com");
   });
 });
