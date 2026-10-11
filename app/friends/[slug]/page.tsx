@@ -67,7 +67,7 @@ export default async function FriendPage({ params }: PageProps<"/friends/[slug]"
         </Section>
         <Section title="Being a good friend" tone="bg-leaf-soft/70">
           <ul className="space-y-2">{f.safeWatching.map((x) => <li key={x} className="flex gap-2"><Check />{x}</li>)}</ul>
-          <h3 className="mt-4 text-lg font-semibold text-coral">Please don&apos;t</h3>
+          <h3 className="mt-4 text-lg font-semibold text-coral-ink">Please don&apos;t</h3>
           <ul className="mt-1 space-y-1.5">{f.dontDo.map((x) => <li key={x} className="flex gap-2"><Cross />{x}</li>)}</ul>
         </Section>
       </div>
@@ -94,7 +94,10 @@ export default async function FriendPage({ params }: PageProps<"/friends/[slug]"
             </li>
           ))}
         </ul>
-        <Link href={`/stories#${f.slug}`} className="btn-ghost mt-3 inline-flex font-bold">Read “{f.story.title}” →</Link>
+        <div className="mt-3 flex flex-wrap gap-x-6">
+          <Link href={`/stories#${f.slug}`} className="btn-ghost inline-flex font-bold">Read “{f.story.title}” →</Link>
+          <Link href={`/ecosystem#${f.slug}`} className="btn-ghost inline-flex font-bold">See who the {f.name.toLowerCase()} helps →</Link>
+        </div>
       </section>
     </article>
   );
@@ -105,5 +108,5 @@ const Check = () => (
   <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-moss" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden><path d="m5 12 5 5 9-10" /></svg>
 );
 const Cross = () => (
-  <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-coral" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden><path d="M6 6l12 12M18 6 6 18" /></svg>
+  <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-coral-ink" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden><path d="M6 6l12 12M18 6 6 18" /></svg>
 );

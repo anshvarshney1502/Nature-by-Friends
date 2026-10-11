@@ -54,7 +54,7 @@ describe("sanitize model output", () => {
 });
 
 const img = "data:image/jpeg;base64,AAAA";
-const req = (body: unknown) => new Request("http://localhost/api/identify", { method: "POST", body: JSON.stringify(body), headers: { "content-type": "application/json" } });
+const req = (body: unknown) => new Request("http://localhost/api/identify", { method: "POST", body: JSON.stringify(body), headers: { "content-type": "application/json", origin: "http://localhost" } });
 
 describe("/api/identify", () => {
   afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals(); });

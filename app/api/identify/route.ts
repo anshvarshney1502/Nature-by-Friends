@@ -10,7 +10,7 @@ export const maxDuration = 60;
 export async function POST(req: Request) {
   if (!originAllowed(req)) return fail(403, "forbidden_origin", "Origin not allowed");
   if (tooLarge(req, 2_000_000)) return fail(413, "too_large", "Photo is too large");
-  if (rateLimited(req, "identify", 10)) return fail(429, "rate_limited", "Too many requests, try again in a minute");
+  if (rateLimited(req, "identify", 10, 60)) return fail(429, "rate_limited", "Too many requests, try again in a minute");
 
   const parsed = identifyRequestSchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return fail(400, "invalid_request", parsed.error.issues[0]?.message ?? "Invalid request");

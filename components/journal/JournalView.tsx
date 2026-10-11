@@ -97,7 +97,7 @@ export function JournalView() {
                       Compare
                     </label>
                     {!e.revisitOf && <button className="btn btn-ghost" onClick={() => setRevisiting(e)}>Visit again</button>}
-                    <button className="btn btn-ghost ml-auto text-coral" onClick={() => {
+                    <button className="btn btn-ghost ml-auto text-coral-ink" onClick={() => {
                       if (confirm("Remove this page from your journal? This can't be undone.")) { deleteEntry(e.id); setSelected((s) => s.filter((x) => x !== e.id)); refresh(); }
                     }}>Remove</button>
                   </div>

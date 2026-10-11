@@ -5,7 +5,7 @@ import { POST as audio } from "@/app/api/audio/route";
 
 const f = getFriend("earthworm")!;
 const missionText = `${f.mission.title}. ${f.mission.steps.join(" ")}`;
-const req = (text: string) => new Request("http://localhost/api/audio", { method: "POST", body: JSON.stringify({ text }) });
+const req = (text: string) => new Request("http://localhost/api/audio", { method: "POST", body: JSON.stringify({ text }), headers: { origin: "http://localhost" } });
 
 describe("narration gate", () => {
   it("accepts text built from curated content", () => {

@@ -7,7 +7,7 @@ const body = z.object({ text: z.string().min(1).max(2500) });
 export async function POST(req: Request) {
   if (!originAllowed(req)) return fail(403, "forbidden_origin", "Origin not allowed");
   if (tooLarge(req, 10_000)) return fail(413, "too_large", "Text too long");
-  if (rateLimited(req, "audio", 30)) return fail(429, "rate_limited", "Too many requests");
+  if (rateLimited(req, "audio", 30, 300)) return fail(429, "rate_limited", "Too many requests");
 
   const parsed = body.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return fail(400, "invalid_request", "Expected { text }");

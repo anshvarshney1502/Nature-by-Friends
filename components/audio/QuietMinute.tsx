@@ -53,7 +53,7 @@ export function QuietMinute({ compact = false }: { compact?: boolean }) {
       <button className="btn btn-primary mt-4" onClick={() => (on ? finish() : playPart(0))} aria-pressed={on}>
         {on ? "Stop" : "Start the Quiet Minute"}
       </button>
-      {failed && <p role="status" className="mt-2 text-sm font-semibold text-coral">The audio couldn&apos;t play. You can still do it: close your eyes and count the sounds you hear.</p>}
+      {failed && <p role="status" className="mt-2 text-sm font-semibold text-coral-ink">The audio couldn&apos;t play. You can still do it: close your eyes and count the sounds you hear.</p>}
     </div>
   );
 }

@@ -46,15 +46,20 @@ export function MissionJourney() {
   const [d, setD] = useState<Draft>(blank);
   const [ready, setReady] = useState(false);
   const [saved, setSaved] = useState<"no" | "yes" | "failed">("no");
+  const [offer, setOffer] = useState<string | null>(null); // friend from a link, while another mission is in progress
 
   // Resume a mission in progress (the child may have closed the app while outside).
   useEffect(() => {
     const fromUrl = params.get("friend");
     const draft = loadDraft();
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate from localStorage once on mount
-    if (fromUrl && getFriend(fromUrl) && draft?.slug !== fromUrl) setD({ ...blank, slug: fromUrl, step: 1 });
+    const fresh = fromUrl && getFriend(fromUrl) && draft?.slug !== fromUrl;
+    // Never silently replace a mission the child has already started (step 2+); ask instead.
+    /* eslint-disable react-hooks/set-state-in-effect -- hydrate from localStorage/URL once on mount */
+    if (fresh && draft && draft.step >= 2) { setD(draft); setOffer(fromUrl); }
+    else if (fresh) setD({ ...blank, slug: fromUrl, step: 1 });
     else if (draft) setD(draft);
     setReady(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [params]);
 
   useEffect(() => {
@@ -104,8 +109,18 @@ export function MissionJourney() {
 
   if (!ready) return <div className="card h-96 animate-pulse bg-paper-deep/50" aria-label="Loading mission" />;
 
+  const offered = offer ? getFriend(offer) : undefined;
   return (
     <div>
+      {offered && (
+        <div role="alert" className="card mb-5 flex flex-col gap-3 bg-butter-soft p-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="font-semibold text-forest">You already have a mission going with {friend ? `the ${friend.name.toLowerCase()}` : "a little neighbour"}. Keep going, or start one with the {offered.name.toLowerCase()}?</p>
+          <div className="flex shrink-0 gap-2">
+            <button className="btn btn-soft" onClick={() => setOffer(null)}>Keep going</button>
+            <button className="btn btn-primary" onClick={() => { setD({ ...blank, slug: offered.slug, step: 1 }); setOffer(null); }}>Start new</button>
+          </div>
+        </div>
+      )}
       <ol className="mb-6 flex gap-1.5" aria-label="Mission progress">
         {STEPS.map((s, i) => (
           <li key={s} className="flex-1" aria-current={i === d.step ? "step" : undefined}>
@@ -225,7 +240,7 @@ export function MissionJourney() {
                   <li>• Come back and tell your journal what you noticed.</li>
                 </ul>
                 <div className="mt-6"><QuietMinute compact /></div>
-                <button className="btn mt-4 bg-leaf text-white shadow-[0_4px_0_#16301d]" onClick={() => go(4)}>I&apos;m back!</button>
+                <button className="btn btn-primary mt-4" onClick={() => go(4)}>I&apos;m back!</button>
                 <button className="btn btn-ghost mt-2 text-paper/80" onClick={() => go(2)}>Back</button>
               </div>
             </Panel>

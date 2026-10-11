@@ -69,6 +69,17 @@ Give the deployed app a **read-only** database user. Pages are statically render
 - The journal stays in `localStorage`. Photos are downscaled on-device, and re-encoding strips EXIF and GPS data. A photo is sent once, only when the child taps "Ask about this photo", and is never stored on the server.
 - There are no accounts, location, streaks, points or social features.
 
+## Security
+- **Secrets** live only in `.env.local` (git-ignored) and the host's env settings. None are `NEXT_PUBLIC_`. A scan of the full git history and the built browser bundles found no keys, passwords or env names.
+- **Rate limits:** per visitor IP plus a global cap on paid endpoints (`/api/identify` 10/min per IP and 60/min total; `/api/audio` 30/300). On Render the IP comes from Cloudflare's `CF-Connecting-IP`, which can't be forged. `X-Forwarded-For` is ignored there, because it can be.
+- **Origin check:** POSTs must come from this site. Requests without an `Origin` header (scripts, not browsers) are rejected.
+- **Input limits:** zod validation and request-size limits on every API. Narration only accepts the app's own curated sentences.
+- **Headers:** a strict Content-Security-Policy (self-hosted only, `frame-ancestors 'none'`), HSTS, `nosniff`, `X-Frame-Options: DENY`, a Referrer-Policy, and a Permissions-Policy that denies camera, mic and location. `X-Powered-By` is hidden.
+- **Database:** the app uses a read-only MongoDB user scoped to one database on one cluster. The admin user is only used locally for seeding.
+- **AI output** is never trusted: it is schema-validated, unsafe instructions are replaced, and safety advice is always curated.
+- **GitHub:** secret scanning, push protection and Dependabot alerts with security updates are on. CI runs with read-only permissions.
+- **Known:** `npm audit` flags 5 issues in the dev-only lint toolchain (`eslint-plugin-next` → `braces`). They don't ship to production; production deps have 0 vulnerabilities.
+
 ## Deploy
 
 **Render:** New, then Blueprint, then select this repo (`render.yaml`). Set secrets in the dashboard. The health check is `/api/health`. The default plan in the blueprint is `starter`, which is paid. Switch it to `free` if you accept cold starts.

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { WEB_H, WEB_W, webLinks, webNodes } from "@/lib/content/web";
@@ -16,6 +16,13 @@ export function FriendshipWeb() {
   const reduce = useReducedMotion();
   const [focus, setFocus] = useState<string>("earthworm");
   const [link, setLink] = useState<string | null>(null);
+
+  // /ecosystem#frog opens with that friend in focus (linked from each friend's page).
+  useEffect(() => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- read the URL hash once after mount
+    if (webNodes.some((n) => n.id === id)) setFocus(id);
+  }, []);
   const connected = webLinks.filter((l) => l.from === focus || l.to === focus);
   const active = webLinks.find((l) => linkId(l) === link);
   const focusNode = node(focus);
@@ -41,8 +48,8 @@ export function FriendshipWeb() {
             <button key={n.id} onClick={() => { setFocus(n.id); setLink(null); }} aria-pressed={n.id === focus}
               className={`absolute flex -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-col items-center rounded-2xl p-0.5 transition-all ${on ? "opacity-100" : "opacity-55 hover:opacity-100"}`}
               style={{ left: `${((n.x + PAD) / VW) * 100}%`, top: `${((n.y + PAD) / VH) * 100}%` }}>
-              <span className={`grid h-10 w-10 place-items-center rounded-full border-2 bg-card sm:h-14 sm:w-14 ${n.id === focus ? "border-coral ring-4 ring-coral/25" : "border-forest/25"}`}>
-                {n.slug ? <Creature slug={n.slug} className="h-8 w-8 sm:h-12 sm:w-12" /> : <Thing id={n.id} />}
+              <span className={`grid h-11 w-11 place-items-center rounded-full border-2 bg-card sm:h-14 sm:w-14 ${n.id === focus ? "border-coral ring-4 ring-coral/25" : "border-forest/25"}`}>
+                {n.slug ? <Creature slug={n.slug} className="h-9 w-9 sm:h-12 sm:w-12" /> : <Thing id={n.id} />}
               </span>
               <span className="mt-0.5 whitespace-nowrap rounded-full bg-card/90 px-1 text-[10px] font-bold leading-tight text-forest sm:px-1.5 sm:text-xs">{n.label}</span>
             </button>

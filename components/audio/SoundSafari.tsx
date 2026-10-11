@@ -93,7 +93,7 @@ export function SoundSafari() {
         </button>
       </div>
       <p className="mt-4 text-center font-[family-name:var(--font-display)] text-2xl font-semibold text-forest">Who is making this sound?</p>
-      {failed && <p role="status" className="mt-2 text-center text-sm font-semibold text-coral">The sound didn&apos;t play. Check your volume and tap “Hear it again”.</p>}
+      {failed && <p role="status" className="mt-2 text-center text-sm font-semibold text-coral-ink">The sound didn&apos;t play. Check your volume and tap “Hear it again”.</p>}
       <ul className="mt-4 grid grid-cols-3 gap-3">
         {choices.map((c) => {
           const cf = getFriend(c)!;

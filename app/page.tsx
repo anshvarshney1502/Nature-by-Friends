@@ -72,6 +72,17 @@ export default function Home() {
         </div>
       </section>
 
+      <section aria-labelledby="web-h" className="card flex flex-col items-center gap-5 bg-leaf-soft/40 p-6 sm:flex-row md:p-8">
+        <div className="flex shrink-0 -space-x-3">
+          {["earthworm", "mushroom", "tree"].map((s) => <Creature key={s} slug={s} className="h-20 w-20" />)}
+        </div>
+        <div>
+          <h2 id="web-h" className="text-3xl font-semibold">Nobody in nature lives alone</h2>
+          <p className="mt-1 text-ink-soft">Worms feed the soil, fungi help tree roots, bees carry pollen. Explore how all 20 friends help each other.</p>
+          <Link href="/ecosystem" className="btn btn-soft mt-4">Open the Friendship Web</Link>
+        </div>
+      </section>
+
       <section aria-labelledby="journey" className="card relative overflow-hidden bg-sky-soft p-6 md:p-10">
         <h2 id="journey" className="text-3xl font-semibold">Your friendship journey</h2>
         <p className="mt-2 text-ink-soft">Six small steps. Most of them happen with the phone in your pocket.</p>

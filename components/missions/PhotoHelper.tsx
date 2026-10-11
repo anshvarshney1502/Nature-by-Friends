@@ -96,7 +96,7 @@ export function PhotoHelper({
             <p className="mt-1 text-sm text-ink-soft">Clues: {r.visibleEvidence.join(", ")}</p>
           )}
           {(r.needsAdultHelp || r.confidenceLabel !== "likely") && (
-            <p className="mt-2 font-semibold text-coral">Not sure? Ask a trusted adult before getting any closer.</p>
+            <p className="mt-2 font-semibold text-coral-ink">Not sure? Ask a trusted adult before getting any closer.</p>
           )}
           {res.notice && <p className="mt-1 text-xs text-ink-soft">{res.notice}</p>}
           <button className="btn btn-primary mt-3" onClick={onUse}>Use this mission</button>
